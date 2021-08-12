@@ -17,9 +17,12 @@ library(googledrive)
 drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../BibTeX_Library.bib')
 ```
 
-
+<center>
 ```{r}
 knitr::include_url("https://imccart.github.io/empirical-methods/panel-data/slides-panel.html")
 ```
+
+<p><a class="btn btn-primary btn-lg" target="_blank" href="https://imccart.github.io/empirical-methods/panel-data/slides-panel.html"><i class="fas fa-external-link-alt"></i> View slides in new window</a></p>
+</center>
 
 # References
