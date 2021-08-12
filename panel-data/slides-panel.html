@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Basics of Panel Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Basics of Panel Data
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Workshop on Causal Inference with Panel Data
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code {
+  font-size: 15px;
+}
+.remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+# Table of contents
+
+1. [What are Panel Data](#panel)
+2. [Estimation](#estimation)
+3. [In Practice](#handson)
+4. [Semantics](#semantics)
+
+---
+class: inverse, center, middle
+name: panel
+
+# What are Panel Data?
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Nature of the Data
+
+- Repeated observations of the same units over time
+
+
+--
+**Notation**
+- Unit `\(i=1,...,N\)` over several periods `\(t=1,...,T\)`, which we denote `\(y_{it}\)`
+- Treatment status `\(D_{it}\)`
+- Regression model, &lt;br&gt;
+`\(y_{it} = \delta D_{it} + u_{i} + \epsilon_{it}\)` for `\(t=1,...,T\)` and `\(i=1,...,N\)`
+
+---
+# Benefits of Panel Data
+
+- *May* overcome certain forms of omitted variable bias
+- Allows for unobserved but time-invariant factor, `\(u_{i}\)`, that affects both treatment and outcomes
+
+
+--
+**Still assumes**
+- No time-varying confounders 
+- Past outcomes do not directly affect current outcomes
+- Past outcomes do not affect treatment (reverse causality)
+
+---
+# Some textbook settings
+
+- Unobserved "ability" when studying schooling and wages
+- Unobserved "quality" when studying physicians or hospitals
+
+---
+class: inverse, center, middle
+name: estimation
+
+# Estimating Regressions with Panel Data
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Regression model
+
+`\(y_{it} = \delta D_{it} + u_{i} + \epsilon_{it}\)` for `\(t=1,...,T\)` and `\(i=1,...,N\)`
+
+---
+# Fixed Effects
+
+`\(y_{it} = \delta D_{it} + u_{i} + \epsilon_{it}\)` for `\(t=1,...,T\)` and `\(i=1,...,N\)`
+
+
+--
+- Allows correlation between `\(u_{i}\)` and `\(D_{it}\)`
+- Physically estimate `\(u_{i}\)` in some cases via set of dummy variables
+- More generally, "remove" `\(u_{i}\)` via:
+  - "within" estimator
+  - first-difference estimator
+  
+---
+# Within Estimator
+`\(y_{it} = \delta D_{it} + u_{i} + \epsilon_{it}\)` for `\(t=1,...,T\)` and `\(i=1,...,N\)`
+
+
+--
+- Most common approach (default in most statistical software)
+- Equivalent to demeaned model,&lt;br&gt;
+`\(y_{it} - \bar{y}_{i} = \delta (D_{it} - \bar{D}_{i}) + (u_{i} - \bar{u}_{i}) + (\epsilon_{it} - \bar{\epsilon}_{i})\)`
+- `\(u_{i} - \bar{u}_{i} = 0\)` since `\(u_{i}\)` is time-invariant
+- Requires *strict exogeneity* assumption (error is uncorrelated with `\(D_{it}\)` for all time periods)
+
+---
+# First-difference
+`\(y_{it} = \delta D_{it} + u_{i} + \epsilon_{it}\)` for `\(t=1,...,T\)` and `\(i=1,...,N\)`
+
+
+--
+- Instead of subtracting the mean, subtract the prior period values&lt;br&gt;
+`\(y_{it} - y_{i,t-1} = \delta(D_{it} - D_{i,t-1}) + (u_{i} - u_{i}) + (\epsilon_{it} - \epsilon_{i,t-1})\)`
+- Requires exogeneity of `\(\epsilon_{it}\)` and `\(D_{it}\)` only for time `\(t\)` and `\(t-1\)` (weaker assumption than within estimator)
+- Sometimes useful to estimate both FE and FD just as a check
+
+
+---
+# Keep in mind...
+
+- Discussion only applies to linear case or very specific nonlinear models
+- Fixed effects can't solve reverse causality
+- Fixed effects doesn't address unobserved, time-varying confounders
+- Can't estimate effects on time-invariant variables
+- May "absorb" a lot of the variation for variables that don't change much over time
+
+---
+class: inverse, center, middle
+name: handson
+
+# Seeing things in action
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Within Estimator (Default)
+
+.pull-left[
+**Stata**&lt;br&gt;
+
+```stata
+ssc install bcuse
+bcuse wagepan
+tsset nr year
+xtreg lwage exper expersq, fe
+```
+]
+
+.pull-right[
+**R**&lt;br&gt;
+
+```r
+library(readstata13)
+library(fixest)
+wagepan &lt;- read.dta13("http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta")
+feols(lwage~exper + expersq | nr, data=wagepan)
+```
+]
+
+
+---
+# Within Estimator (Manually Demean)
+
+.pull-left[
+**Stata**&lt;br&gt;
+
+```stata
+ssc install bcuse
+bcuse wagepan
+foreach x of varlist lwage exper expersq {
+  egen mean_`x'=mean(`x')
+  egen demean_`x'=`x'-mean_`x'
+}
+reg demean_lwage demean_exper demean_expersq
+```
+]
+
+.pull-right[
+**R**&lt;br&gt;
+
+```r
+library(readstata13)
+wagepan &lt;- read.dta13("http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta")
+wagepan &lt;- wagepan %&gt;%
+  group_by(nr) %&gt;%
+  mutate(demean_lwage=lwage - mean(lwage),
+         demean_exper=exper - mean(exper),
+         demean_expersq=expersq - mean(expersq))
+summary(lm(demean_lwage~demean_exper + demean_expersq, data=wagepan))
+```
+]
+
+
+---
+# First differencing
+
+.pull-left[
+**Stata**&lt;br&gt;
+
+```stata
+ssc install bcuse
+bcuse wagepan
+reg d.lwage d.exper d.expersq, noconstant
+```
+]
+
+.pull-right[
+**R**&lt;br&gt;
+
+```r
+library(readstata13)
+wagepan &lt;- read.dta13("http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta")
+wagepan &lt;- wagepan %&gt;%
+  group_by(nr) %&gt;%
+  arrange(year) %&gt;%
+  mutate(fd_lwage=lwage - lag(lwage),
+         fd_exper=exper - lag(exper),
+         fd_expersq=expersq - lag(expersq)) %&gt;%
+  na.omit()
+summary(lm(fd_lwage~0 + fd_exper + fd_expersq, data=wagepan))
+```
+]
+
+
+---
+class: inverse, center, middle
+name: semantics
+
+# Some Communication Problems!
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
