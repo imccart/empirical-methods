@@ -14,13 +14,12 @@ math: true
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(error = TRUE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, echo = FALSE)
 library(googledrive)
-library(here)
 drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../BibTeX_Library.bib')
 ```
 
 
 ```{r}
-knitr::include_url(here("panel-data/slides-panel.html"))
+knitr::include_url("https://imccart.github.io/empirical-methods/panel-data/slides-panel.html")
 ```
 
 # References
