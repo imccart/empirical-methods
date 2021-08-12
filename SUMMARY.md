@@ -4,7 +4,7 @@
 
 ## Endogeneity
 
-* [Untitled](endogeneity/untitled.md)
+* [Untitled](instrumental-variables/untitled.md)
 
 ## Instrumental Variables
 
