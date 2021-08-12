@@ -12,11 +12,14 @@ math: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(error = TRUE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, echo = FALSE)
 library(googledrive)
 drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../BibTeX_Library.bib')
 ```
 
 
+```{r}
+knitr::include_url("slides-panel.html")
+```
 
 # References
