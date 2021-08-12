@@ -6,7 +6,7 @@ I put these diagrams and links together to help me keep some of this straight. T
 
 Now, the goal with all of this is **NOT** to teach the statistics of any given estimator or research design.
 
-![neato](https://github.com/imccart/empirical-methods/tree/a49be058b938002ce6ab97e747957007d9adf6e7/img/mathschoolofrock.gif#center)
+![neato](images/mathschoolofrock.gif#center)
 
 The goal is to navigate all of the other stuff that you have to do before you can even rely on the results of such an estimation. Estimating something with RD, DD, or IV is one thing, but providing convincing evidence of a causal effect is a much bigger question \(and, I would argue, is the implicit goal of anyone using these methods anyway\).
 
