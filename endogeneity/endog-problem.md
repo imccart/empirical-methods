@@ -20,82 +20,146 @@ Oster 2019
 
 Extending the work of Altonji, Elder, and Taber (2005), Oster (2019)
 lays out a scenario in which we can fully decompose our outcome of
-interest into a treatment effect (denoted *β*), observed controls
-(denoted by *W*<sub>1</sub>), unobserved controls (denoted by
-*W*<sub>2</sub>), and some iid error term. Denote by *X* the treatment
-variable, such that
-*Y* = *β**X* + *W*<sub>1</sub> + *W*<sub>2</sub> + *ϵ*.
+interest into a treatment effect (denoted
+![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta")),
+observed controls (denoted by
+![W\_{1}](https://latex.codecogs.com/png.latex?W_%7B1%7D "W_{1}")),
+unobserved controls (denoted by
+![W\_{2}](https://latex.codecogs.com/png.latex?W_%7B2%7D "W_{2}")), and
+some iid error term. Denote by
+![X](https://latex.codecogs.com/png.latex?X "X") the treatment variable,
+such that
+
+![Y = \\beta X + W\_{1} + W\_{2} + \\epsilon.](https://latex.codecogs.com/png.latex?Y%20%3D%20%5Cbeta%20X%20%2B%20W_%7B1%7D%20%2B%20W_%7B2%7D%20%2B%20%5Cepsilon. "Y = \beta X + W_{1} + W_{2} + \epsilon.")
+
 We then need to consider values (or a range of values) for two key
 objects.
 
-1.  What is the maximum *R*<sup>2</sup> value we could obtain if we
-    observed *W*<sub>2</sub>? Let’s call this
-    *R*<sub>max</sub><sup>2</sup>. If we think the outcome is fully
-    deterministic if we were to observe all relevant variables, then
-    *R*<sub>max</sub><sup>2</sup> = 1, but we could consider smaller
-    values as well.
+1.  What is the maximum
+    ![R^2](https://latex.codecogs.com/png.latex?R%5E2 "R^2") value we
+    could obtain if we observed
+    ![W\_{2}](https://latex.codecogs.com/png.latex?W_%7B2%7D "W_{2}")?
+    Let’s call this
+    ![R\_{\\text{max}}^{2}](https://latex.codecogs.com/png.latex?R_%7B%5Ctext%7Bmax%7D%7D%5E%7B2%7D "R_{\text{max}}^{2}").
+    If we think the outcome is fully deterministic if we were to observe
+    all relevant variables, then
+    ![R\_{\\text{max}}^{2}=1](https://latex.codecogs.com/png.latex?R_%7B%5Ctext%7Bmax%7D%7D%5E%7B2%7D%3D1 "R_{\text{max}}^{2}=1"),
+    but we could consider smaller values as well.
 
 2.  What is the degree of selection on observed variables relative to
-    unobserved variables? We can denote this value as *δ*, and define
-    *δ* as the value such that:
-    $$\\delta \\times \\frac{Cov(W\_{1},X)}{Var(W\_{1})} = \\frac{Cov(W\_{2},X)}{Var(W\_{2})}.$$
+    unobserved variables? We can denote this value as
+    ![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta"),
+    and define
+    ![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta")
+    as the value such that:
+
+    ![\\delta \\times \\frac{Cov(W\_{1},X)}{Var(W\_{1})} = \\frac{Cov(W\_{2},X)}{Var(W\_{2})}.](https://latex.codecogs.com/png.latex?%5Cdelta%20%5Ctimes%20%5Cfrac%7BCov%28W_%7B1%7D%2CX%29%7D%7BVar%28W_%7B1%7D%29%7D%20%3D%20%5Cfrac%7BCov%28W_%7B2%7D%2CX%29%7D%7BVar%28W_%7B2%7D%29%7D. "\delta \times \frac{Cov(W_{1},X)}{Var(W_{1})} = \frac{Cov(W_{2},X)}{Var(W_{2})}.")
 
 We then need to define a few objects that we can directly estimate with
 the data:
 
-1.  Denote by *R*<sub>*X*</sub><sup>2</sup> the *R*<sup>2</sup> from a
-    regression of *Y* on treatment (and only treatment, no covariates).
-    Similarly denote by *β̂*<sub>*X*</sub> the value of *β* estimated
-    from that regression.
+1.  Denote by
+    ![R^{2}\_{X}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7BX%7D "R^{2}_{X}")
+    the
+    ![R^{2}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D "R^{2}")
+    from a regression of
+    ![Y](https://latex.codecogs.com/png.latex?Y "Y") on treatment (and
+    only treatment, no covariates). Similarly denote by
+    ![\\hat{\\beta}\_{X}](https://latex.codecogs.com/png.latex?%5Chat%7B%5Cbeta%7D_%7BX%7D "\hat{\beta}_{X}")
+    the value of
+    ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta")
+    estimated from that regression.
 
-2.  Denote by *R*<sub>*X*, *W*<sub>1</sub></sub><sup>2</sup> the
-    *R*<sup>2</sup> from a regression of *Y* on treatment and observed
-    controls. Again, denote the estimated value of *β* from this
-    regression as *β̂*<sub>*X*, *W*<sub>1</sub></sub>.
+2.  Denote by
+    ![R^{2}\_{X,W\_{1}}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7BX%2CW_%7B1%7D%7D "R^{2}_{X,W_{1}}")
+    the
+    ![R^{2}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D "R^{2}")
+    from a regression of
+    ![Y](https://latex.codecogs.com/png.latex?Y "Y") on treatment and
+    observed controls. Again, denote the estimated value of
+    ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta") from
+    this regression as
+    ![\\hat{\\beta}\_{X, W\_{1}}](https://latex.codecogs.com/png.latex?%5Chat%7B%5Cbeta%7D_%7BX%2C%20W_%7B1%7D%7D "\hat{\beta}_{X, W_{1}}").
 
 Under the assumption that the relative size of coefficients from a
-regression of *Y* on *X* and observed variables are equal to those from
-a regression of *X* and the observed variables, Oster (2019) then shows
-that the true coefficient of interest (*β* from the full regression)
-converges to the following:
+regression of ![Y](https://latex.codecogs.com/png.latex?Y "Y") on
+![X](https://latex.codecogs.com/png.latex?X "X") and observed variables
+are equal to those from a regression of
+![X](https://latex.codecogs.com/png.latex?X "X") and the observed
+variables, Oster (2019) then shows that the true coefficient of interest
+(![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta") from
+the full regression) converges to the following:
 
-$$\\beta^{\*} \\approx \\hat{\\beta}\_{X,W\_{1}} - \\delta \\times \\left\[\\hat{\\beta}\_{X} - \\hat{\\beta}\_{X,W\_{1}}\\right\] \\times \\frac{R\_{max}^{2} - R\_{X,W\_{1}}^{2}}{R\_{X,W\_{1}}^{2} - R\_{X}^{2}} \\xrightarrow{p} \\beta.$$
+![\\beta^{\*} \\approx \\hat{\\beta}\_{X,W\_{1}} - \\delta \\times \\left\[\\hat{\\beta}\_{X} - \\hat{\\beta}\_{X,W\_{1}}\\right\] \\times \\frac{R\_{max}^{2} - R\_{X,W\_{1}}^{2}}{R\_{X,W\_{1}}^{2} - R\_{X}^{2}} \\xrightarrow{p} \\beta.](https://latex.codecogs.com/png.latex?%5Cbeta%5E%7B%2A%7D%20%5Capprox%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%20-%20%5Cdelta%20%5Ctimes%20%5Cleft%5B%5Chat%7B%5Cbeta%7D_%7BX%7D%20-%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%5Cright%5D%20%5Ctimes%20%5Cfrac%7BR_%7Bmax%7D%5E%7B2%7D%20-%20R_%7BX%2CW_%7B1%7D%7D%5E%7B2%7D%7D%7BR_%7BX%2CW_%7B1%7D%7D%5E%7B2%7D%20-%20R_%7BX%7D%5E%7B2%7D%7D%20%5Cxrightarrow%7Bp%7D%20%5Cbeta. "\beta^{*} \approx \hat{\beta}_{X,W_{1}} - \delta \times \left[\hat{\beta}_{X} - \hat{\beta}_{X,W_{1}}\right] \times \frac{R_{max}^{2} - R_{X,W_{1}}^{2}}{R_{X,W_{1}}^{2} - R_{X}^{2}} \xrightarrow{p} \beta.")
 
 If we relax the assumption of equal “relative contributions” between the
-observed covariates and *Y* versus the observed covariates and *X*, then
-the results are a little more complicated. In that case, Oster (2019)
-shows that
-$$\\beta^{\*} = \\hat{\\beta}\_{X,W\_{1}} - \\nu\_{1} \\xrightarrow{p} \\beta,$$
+observed covariates and ![Y](https://latex.codecogs.com/png.latex?Y "Y")
+versus the observed covariates and
+![X](https://latex.codecogs.com/png.latex?X "X"), then the results are a
+little more complicated. In that case, Oster (2019) shows that
+
+![\\beta^{\*} = \\hat{\\beta}\_{X,W\_{1}} - \\nu\_{1} \\xrightarrow{p} \\beta,](https://latex.codecogs.com/png.latex?%5Cbeta%5E%7B%2A%7D%20%3D%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%20-%20%5Cnu_%7B1%7D%20%5Cxrightarrow%7Bp%7D%20%5Cbeta%2C "\beta^{*} = \hat{\beta}_{X,W_{1}} - \nu_{1} \xrightarrow{p} \beta,")
+
 or
-*β*<sup>\*</sup> ∈ {*β̂*<sub>*X*, *W*<sub>1</sub></sub>−*ν*<sub>1</sub>,*β̂*<sub>*X*, *W*<sub>1</sub></sub>−*ν*<sub>2</sub>,*β̂*<sub>*X*, *W*<sub>1</sub></sub>−*ν*<sub>3</sub>},
-where *ν*<sub>1</sub>, *ν*<sub>2</sub>, and *ν*<sub>3</sub> are roots of
-a cubic function, *f*(*ν*), derived in the paper. In the case of more
-than one root, then one element of *β*<sup>\*</sup> converges in
-probability to *β*. If *δ* = 1, then some additional simplifications can
-be made, but the point is that we now have an expression for the bias as
-a function of *δ* and *R*<sub>*m**a**x*</sub><sup>2</sup>.
+
+![\\beta^{\*} \\in \\left\\{ \\hat{\\beta}\_{X,W\_{1}} - \\nu\_{1}, \\hat{\\beta}\_{X,W\_{1}} - \\nu\_{2}, \\hat{\\beta}\_{X,W\_{1}} - \\nu\_{3} \\right\\},](https://latex.codecogs.com/png.latex?%5Cbeta%5E%7B%2A%7D%20%5Cin%20%5Cleft%5C%7B%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%20-%20%5Cnu_%7B1%7D%2C%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%20-%20%5Cnu_%7B2%7D%2C%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%20-%20%5Cnu_%7B3%7D%20%5Cright%5C%7D%2C "\beta^{*} \in \left\{ \hat{\beta}_{X,W_{1}} - \nu_{1}, \hat{\beta}_{X,W_{1}} - \nu_{2}, \hat{\beta}_{X,W_{1}} - \nu_{3} \right\},")
+
+where
+![\\nu\_{1}](https://latex.codecogs.com/png.latex?%5Cnu_%7B1%7D "\nu_{1}"),
+![\\nu\_{2}](https://latex.codecogs.com/png.latex?%5Cnu_%7B2%7D "\nu_{2}"),
+and
+![\\nu\_{3}](https://latex.codecogs.com/png.latex?%5Cnu_%7B3%7D "\nu_{3}")
+are roots of a cubic function,
+![f(\\nu)](https://latex.codecogs.com/png.latex?f%28%5Cnu%29 "f(\nu)"),
+derived in the paper. In the case of more than one root, then one
+element of
+![\\beta^{\*}](https://latex.codecogs.com/png.latex?%5Cbeta%5E%7B%2A%7D "\beta^{*}")
+converges in probability to
+![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta"). If
+![\\delta=1](https://latex.codecogs.com/png.latex?%5Cdelta%3D1 "\delta=1"),
+then some additional simplifications can be made, but the point is that
+we now have an expression for the bias as a function of
+![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta") and
+![R^{2}\_{max}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7Bmax%7D "R^{2}_{max}").
 
 So what do we gain from all of this? Well, Oster (2019) shows that we
-can also work backwards and find the value of *δ* such that *β* = 0. In
-other words, say we estimate using OLS some effect,
-*β̂*<sub>*X*, *W*<sub>1</sub></sub>. How big must the role of selection
-on unobservables be in order to completely overpower our estimate such
-that the true effect is actually 0?
+can also work backwards and find the value of
+![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta") such
+that
+![\\beta=0](https://latex.codecogs.com/png.latex?%5Cbeta%3D0 "\beta=0").
+In other words, say we estimate using OLS some effect,
+![\\hat{\\beta}\_{X, W\_{1}}](https://latex.codecogs.com/png.latex?%5Chat%7B%5Cbeta%7D_%7BX%2C%20W_%7B1%7D%7D "\hat{\beta}_{X, W_{1}}").
+How big must the role of selection on unobservables be in order to
+completely overpower our estimate such that the true effect is actually
+0?
 
 Another approach is to consider a range of
-*R*<sub>*m**a**x*</sub><sup>2</sup> and *δ* to bound the estimated
-treatment effect. Using *δ* = 1 as an upper bound for *δ* (i.e.,
-observables are at least as important as the unobservables), and
-*R̄*<sub>*m**a**x*</sub><sup>2</sup> as an upper bound for
-*R*<sub>*m**a**x*</sub><sup>2</sup>, then the bounds on *β*<sup>\*</sup>
+![R^{2}\_{max}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7Bmax%7D "R^{2}_{max}")
+and ![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta")
+to bound the estimated treatment effect. Using
+![\\delta=1](https://latex.codecogs.com/png.latex?%5Cdelta%3D1 "\delta=1")
+as an upper bound for
+![\\delta](https://latex.codecogs.com/png.latex?%5Cdelta "\delta")
+(i.e., observables are at least as important as the unobservables), and
+![\\bar{R}^{2}\_{max}](https://latex.codecogs.com/png.latex?%5Cbar%7BR%7D%5E%7B2%7D_%7Bmax%7D "\bar{R}^{2}_{max}")
+as an upper bound for
+![R^{2}\_{max}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7Bmax%7D "R^{2}_{max}"),
+then the bounds on
+![\\beta^{\*}](https://latex.codecogs.com/png.latex?%5Cbeta%5E%7B%2A%7D "\beta^{*}")
 are
-\[*β̂*<sub>*X*, *W*<sub>1</sub></sub>,*β*<sup>\*</sup>(*R̄*<sub>*m**a**x*</sub><sup>2</sup>,1)\].
+![\\left\[ \\hat{\\beta}\_{X,W\_{1}}, \\beta^{\*}(\\bar{R}^{2}\_{max}, 1) \\right\]](https://latex.codecogs.com/png.latex?%5Cleft%5B%20%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D%2C%20%5Cbeta%5E%7B%2A%7D%28%5Cbar%7BR%7D%5E%7B2%7D_%7Bmax%7D%2C%201%29%20%5Cright%5D "\left[ \hat{\beta}_{X,W_{1}}, \beta^{*}(\bar{R}^{2}_{max}, 1) \right]").
 
-Finally, Oster (2019) suggests setting *δ* = 1 and identifying the value
-of *R*<sub>*m**a**x*</sub><sup>2</sup> for which *β* = 0. This would
-tell us how much of the variation in *Y* would need to be explained by
-unobservables in order for the true effect to be null (given our
-estimate, *β̂*<sub>*X*, *W*<sub>1</sub></sub>.
+Finally, Oster (2019) suggests setting
+![\\delta=1](https://latex.codecogs.com/png.latex?%5Cdelta%3D1 "\delta=1")
+and identifying the value of
+![R^{2}\_{max}](https://latex.codecogs.com/png.latex?R%5E%7B2%7D_%7Bmax%7D "R^{2}_{max}")
+for which
+![\\beta=0](https://latex.codecogs.com/png.latex?%5Cbeta%3D0 "\beta=0").
+This would tell us how much of the variation in
+![Y](https://latex.codecogs.com/png.latex?Y "Y") would need to be
+explained by unobservables in order for the true effect to be null
+(given our estimate,
+![\\hat{\\beta}\_{X,W\_{1}}](https://latex.codecogs.com/png.latex?%5Chat%7B%5Cbeta%7D_%7BX%2CW_%7B1%7D%7D "\hat{\beta}_{X,W_{1}}").
 
 There is also a Stata command, `psacalc`, to do these calculations for
 us (if you’re a Stata user).

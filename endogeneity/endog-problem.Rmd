@@ -6,6 +6,7 @@ output:
     variant: markdown_github
     toc: TRUE
     toc_depth: 3
+    pandoc_args: --webtex
 bibliography: '../BibTeX_Library.bib'
 math: true
 ---
