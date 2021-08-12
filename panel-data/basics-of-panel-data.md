@@ -1,12 +1,8 @@
-<center>
+# Basics of Panel Data
 
 [![](basics-of-panel-data_files/figure-markdown_strict/unnamed-chunk-1-1.png)](https://imccart.github.io/empirical-methods/panel-data/slides-panel.html)
 
-<p>
-<a class="btn btn-primary btn-lg" target="_blank" href="https://imccart.github.io/empirical-methods/panel-data/slides-panel.html"><i class="fas fa-external-link-alt"></i>
-View slides in new window</a>
-</p>
-</center>
+[ View slides in new window](https://imccart.github.io/empirical-methods/panel-data/slides-panel.html)
 
-References
-==========
+## References
+
