@@ -22,7 +22,7 @@ It would be great if we could test for whether we really had an endogeneity prob
 In both cases, the idea is as follows... Lots of applied researchers assess "coefficient stability" by including different sets of control variables that are intended to proxy for some potentially important unobserved factor. This is not informative of omitted variables bias if the existing controls already do a very poor job of explaining the outcome. As Prof. Oster notes, "Omitted variable bias is proportional to coefficient movements, but only if such movements are scaled by the change in R-squared when controls are included."
 
 
-# Oster 2019 {#oster}
+# Oster 2019 <a name="oster"></a>
 
 Extending the work of @altonji2005, @oster2019 lays out a scenario in which we can fully decompose our outcome of interest into a treatment effect (denoted $\beta$), observed controls (denoted by $W_{1}$), unobserved controls (denoted by $W_{2}$), and some iid error term. Denote by $X$ the treatment variable, such that $$Y = \beta X + W_{1} + W_{2} + \epsilon.$$ We then need to consider values (or a range of values) for two key objects. 
 
@@ -51,7 +51,7 @@ Finally, @oster2019 suggests setting $\delta=1$ and identifying the value of $R^
 
 There is also a Stata command, `psacalc`, to do these calculations for us (if you're a Stata user). 
 
-# Cinelli and Hazlett 2020 {#cinelli}
+# Cinelli and Hazlett 2020 <a name="cinelli"></a>
 
 @cinelli2020 offers a more general approach that does not require functional form assumptions on treatment assignment or on the distribution of unobserved confounders. The intuition of their approach is similar, but I see it as more general than @oster2019 and others. That said, one sensitivity measure proposed in @cinelli2020 requires users to impose some form of a "baseline" covariate in order to gauge relative strength of omitted variables. Once such a variable is specified, we can consider how big confounding must be relative to this relationship estimated from your data. You have to say what this "other relationship" is. And I'm not entirely clearly how this measure works if this estimated relationship is itself subject to endogeneity concerns. 
 
