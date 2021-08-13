@@ -2,11 +2,10 @@
 title: "How big is the problem?"
 date: '2021-08-12'
 output: 
-  md_document:
-    variant: markdown_github
+  html_document:
+    keep_md: TRUE
     toc: TRUE
     toc_depth: 3
-    pandoc_args: --webtex
 bibliography: '../BibTeX_Library.bib'
 math: true
 ---
