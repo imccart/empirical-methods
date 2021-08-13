@@ -22,18 +22,22 @@ We denote the outcome for a given unit and time by
 Presentations
 =============
 
-<center>
+Below are some presentations I’ve made in different settings. These more
+or less repeat the information above but in a presentation format (more
+figures, fewer words).
 
-[![](basics-of-panel-data_files/figure-markdown_github/unnamed-chunk-1-1.png)](https://imccart.github.io/empirical-methods/panel-data/slides/slides-panel.html)
-
-<p>
-<a class="btn btn-primary btn-lg" target="_blank" href="https://imccart.github.io/empirical-methods/panel-data/slides/slides-panel.html"><i class="fas fa-external-link-alt"></i>
-View slides in new window</a>
-</p>
-</center>
+-   [CDC Workshop, August
+    2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
 
 Code Files
 ==========
+
+What good is a discussion of data and econometrics without some
+practice! Here are some very basic code files to implement the
+estimators described above.
+
+-   [Stata Code](../code/Stata-panel.do)
+-   [R Code](../code/R-panel.R)
 
 References
 ==========
