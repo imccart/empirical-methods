@@ -26,14 +26,14 @@ Below are some presentations I’ve made in different settings. These more
 or less repeat the information above but in a presentation format (more
 figures, fewer words).
 
--   [CDC Workshop, August
-    2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
+\[CDC Workshop, August
+2021\]\[<a href="https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html" class="uri">https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html</a>\]
 
 Code Files
 ==========
 
 What good is a discussion of data and econometrics without some
-practice! Here are some very basic code files to implement the
+practice?! Here are some very basic code files to implement the
 estimators described above.
 
 -   [Stata Code](code/Stata-panel.do)
