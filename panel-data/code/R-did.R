@@ -1,13 +1,11 @@
 ########################################
-## Panel data estimates in R
+## Difference-in-Differences in R
 ########################################
-  
-## FE (within) estimator
-library(readstata13)
-library(fixest)
-wagepan <- read.dta13("http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta")
-feols(lwage~exper + expersq | nr, data=wagepan)
+library(tidyverse)  
 
+## FE (within) estimator
+mcaid.data <- read_csv2("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.csv")
+feols(lwage~exper + expersq | nr, data=wagepan)
 
 ## Manually demeaning the data
 wagepan <- wagepan %>%
