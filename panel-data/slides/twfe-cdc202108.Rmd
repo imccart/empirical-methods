@@ -57,9 +57,10 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 })
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
-               scales, plotly, gganimate, cobalt, stargazer, haven, ggthemes,
-               gifski, magick, lfe, dotwhisker, here, modelsummary, fixest)
+pacman::p_load(tidyverse, here, modelsummary, fixest,
+               ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, plotly, gganimate, cobalt, ivpack, stargazer, haven, ggthemes,
+               gifski, magick, lfe, dotwhisker)
 set.seed(1234)
 ```
 
@@ -226,11 +227,11 @@ count: false
 
 Finally, plot coefficients and confidence intervals
 ```{r es-plot, warning=FALSE, include=FALSE}
-dwplot(event.plot.dat, 
+dwplot(event.plot.dat,
        vline=geom_vline(xintercept=0, linetype=2), 
-       order_vars = c("expand_2012","expand_2013","expand_2014",
-                      "expand_2015","expand_2016","expand_2017",
-                      "expand_2018"),
+       vars_order = c("expand_2018","expand_2017","expand_2016",
+                      "expand_2015","expand_2014","expand_2013",
+                      "expand_2012"),
        whisker_args = list(color="black", size=1.1),
        dot_args = list(color="black")) + 
   coord_flip() + theme_bw() + theme(legend.position = "none") +
