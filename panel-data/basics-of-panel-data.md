@@ -26,8 +26,8 @@ Below are some presentations I’ve made in different settings. These more
 or less repeat the information above but in a presentation format (more
 figures, fewer words).
 
-[CDC Workshop, August
-2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
+-   [CDC Workshop, August
+    2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
 
 Code Files
 ==========
@@ -36,8 +36,8 @@ What good is a discussion of data and econometrics without some
 practice! Here are some very basic code files to implement the
 estimators described above.
 
--   [Stata Code](Stata-panel.do)
--   [R Code](R-panel.R)
+-   [Stata Code](code/Stata-panel.do)
+-   [R Code](code/R-panel.R)
 
 References
 ==========
