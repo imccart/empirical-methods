@@ -4,7 +4,7 @@
 library(tidyverse)  
 
 ## FE (within) estimator
-mcaid.data <- read_csv2("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.csv")
+mcaid.data <- read_tsv("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt")
 feols(lwage~exper + expersq | nr, data=wagepan)
 
 ## Manually demeaning the data
