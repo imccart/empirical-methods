@@ -58,7 +58,7 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
-               scales, plotly, gganimate, cobalt, ivpack, stargazer, haven, ggthemes,
+               scales, plotly, gganimate, cobalt, stargazer, haven, ggthemes,
                gifski, magick, lfe, dotwhisker, here, modelsummary)
 set.seed(1234)
 ```
@@ -254,7 +254,7 @@ E[Y_{1}(1) - Y_{0}(1)|W=1] &=& \left( E[Y(1)|W=1] - E[Y(1)|W=0] \right) \\
 ---
 # Estimation
 Regression:<br>
-$Y_{i} = \alpha + \beta W_{i} + \lambda 1(Post) + \delta W_{i} \times 1(Post) + \varepsilon$
+$Y_{i} = \alpha + \beta D_{i} + \lambda 1(Post) + \delta D_{i} \times 1(Post) + \varepsilon$
 
 <br>
 ![:col_header , After, Before, After - Before]
@@ -371,7 +371,7 @@ ins.plot <- ggplot(data=ins.plot.dat, aes(x=year,y=mean,group=expand_ever,linety
 ---
 # Step 2: Estimate Effects
 Interested in $\delta$ from:
-$$y_{it} = \alpha + \beta \times 1(Post) + \gamma \times 1(Expand) + \delta \times 1(Post) \times 1(Expand) + \varepsilon$$
+$$y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Expand) + \delta \times 1(Post) \times 1(Expand) + \varepsilon$$
 
 .pull-left[
 **Stata**<br>

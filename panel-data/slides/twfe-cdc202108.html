@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Two-way Fixed Effects and Event Studies</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+    <link rel="stylesheet" href="cols.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Two-way Fixed Effects and Event Studies
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Workshop on Causal Inference with Panel Data
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code {
+  font-size: 15px;
+}
+.remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+# Table of contents
+
+1. [Two-way Fixed Effects](#twfe)
+2. [Event Studies](#event)
+3. [In Practice](#handson)
+
+---
+class: inverse, center, middle
+name: twfe
+
+# The Idea of TWFE
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# What is TWFE?
+
+- Just a shorthand for a common regression specification
+- Fixed effects for each unit and each time period, `\(\lambda_{i}\)` and `\(\lambda_{t}\)`
+- More general than 2x2 DD but same result
+
+---
+count: false
+
+# What is TWFE?
+Want to estimate `\(\delta\)`:
+
+`$$y_{it} = \alpha + \delta D_{it} + \gamma_{i} + \gamma_{t} + \varepsilon,$$`&lt;br&gt;
+
+where `\(\gamma_{i}\)` and `\(\gamma_{t}\)` denote a set of unit `\(i\)` and time period `\(t\)` dummy variables (or fixed effects).
+
+---
+# TWFE in Practice
+
+```r
+library(tidyverse)
+library(modelsummary)
+mcaid.data &lt;- read_tsv("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt")
+reg.dat &lt;- mcaid.data %&gt;% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %&gt;%
+  mutate(perc_unins=uninsured/adult_pop,
+         post = (year&gt;=2014), 
+         treat=post*expand_ever)
+```
+
+---
+count: false
+
+# TWFE in Practice
+
+
+```r
+summary(lm(perc_unins ~ post + expand_ever + post*expand_ever, data=reg.dat))
+```
+
+```
+## 
+## Call:
+## lm(formula = perc_unins ~ post + expand_ever + post * expand_ever, 
+##     data = reg.dat)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.115667 -0.027106 -0.006804  0.027765  0.117597 
+## 
+## Coefficients:
+##                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               0.213965   0.007180  29.799  &lt; 2e-16 ***
+## postTRUE                 -0.054068   0.008496  -6.364 7.22e-10 ***
+## expand_everTRUE          -0.046326   0.009166  -5.054 7.48e-07 ***
+## postTRUE:expand_everTRUE -0.018403   0.010845  -1.697   0.0908 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.04187 on 304 degrees of freedom
+## Multiple R-squared:  0.4995,	Adjusted R-squared:  0.4946 
+## F-statistic: 101.1 on 3 and 304 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+count: false
+
+# TWFE in Practice
+
+
+```r
+library(fixest)
+twfe &lt;- feols(perc_unins ~ expand | State + year, data=reg.dat)
+twfe$coeftable
+```
+
+```
+##               Estimate  Std. Error  t value     Pr(&gt;|t|)
+## expandTRUE -0.01840269 0.003702314 -4.97059 1.220461e-06
+```
+
+
+---
+class: inverse, center, middle
+name: event
+
+# Event Studies
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# What is an event study?
+
+Event study is poorly named:
+- In finance, even study is just an *interrupted time series*
+- In econ and other areas, we usually have a treatment/control group *and* a break in time
+
+---
+count: false
+
+# What is an event study?
+
+- Allows for different effect estimates at each time period (maybe effects phase in over time or dissipate)
+- Visually very appealing
+- Offers easy "smell test" for parallel trends assumption
+
+
+---
+count: false
+
+# What is an event study?
+
+Estimate something akin to...
+`$$y_{it} = \gamma_{i} + \gamma_{t} + \sum_{\tau = -q}^{-1}\delta_{\tau} D_{i \tau} + \sum_{\tau=0}^{m} \delta_{\tau}D_{i \tau} + x_{it} + \epsilon_{it},$$`
+
+where `\(q\)` captures the number of periods before the treatment occurs and `\(m\)` captures periods after treatment occurs.
+
+---
+# How to do an event study?
+
+First create all of the treatment/year interactions:
+
+```r
+event.dat &lt;- reg.dat %&gt;%
+  mutate(expand_2012 = expand_ever*(year==2012),
+         expand_2013 = expand_ever*(year==2013),
+         expand_2014 = expand_ever*(year==2014),
+         expand_2015 = expand_ever*(year==2015),
+         expand_2016 = expand_ever*(year==2016),
+         expand_2017 = expand_ever*(year==2017),
+         expand_2018 = expand_ever*(year==2018))
+```
+
+---
+count: false
+
+# How to do an event study?
+
+Second, run regression with full set of interactions and group/year dummies:
+
+```r
+event.ins.reg &lt;- lm(perc_unins ~ expand_2012 + expand_2014 + 
+                      expand_2015 + expand_2016 + expand_2017 + 
+                      expand_2018 + factor(year) + factor(State), data=event.dat)
+point.est &lt;- as_tibble(c(event.ins.reg$coefficients[c("expand_2012","expand_2014","expand_2015",
+                                            "expand_2016","expand_2017","expand_2018")]),
+                       rownames = "term")
+ci.est &lt;- as_tibble(confint(event.ins.reg)[c("expand_2012","expand_2014","expand_2015",
+                                   "expand_2016","expand_2017","expand_2018"),],
+                    rownames = "term")
+```
+
+---
+count: false
+
+# How to do an event study?
+
+Third, organize results into a new dataset:
+
+```r
+point.est &lt;- point.est %&gt;% rename(estimate = value)
+ci.est &lt;- ci.est %&gt;% rename(conf.low = `2.5 %`, conf.high = `97.5 %`)
+new.row &lt;- tibble(
+  term = "expand_2013",
+  estimate = 0,
+  conf.low = 0,
+  conf.high = 0,
+  year = 2013
+)
+
+event.plot.dat &lt;- point.est %&gt;%
+  left_join(ci.est, by=c("term")) %&gt;%
+  mutate(year = c(2012, 2014, 2015, 2016, 2017, 2018)) %&gt;%
+  bind_rows(new.row) %&gt;%
+  arrange(year)
+```
+
+---
+count: false
+
+# How to do an event study?
+
+Finally, plot coefficients and confidence intervals
+
+
+.plot-callout[
+&lt;img src="twfe-cdc202108_files/figure-html/es-plot-small-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+
+# How to do an event study?
+
+&lt;img src="twfe-cdc202108_files/figure-html/es-plot-big-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+name: handson
+
+# Seeing things in action
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script src="cols_macro.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
