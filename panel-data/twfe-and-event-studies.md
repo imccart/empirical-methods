@@ -20,8 +20,7 @@ since the overall group and overall treatment period dummies in the 2x2
 case are effectively an average of the individual unit and individual
 time period fixed effects, respectively.
 
-More formally, recall our original DD regression specification,
-
+More formally, recall our original DD regression specification,<br>
 ![y\_{it} = \\alpha + \\beta \\times 1(Post) + \\lambda \\times 1(Treat) + \\delta \\times 1(Post) \\times 1(Treat) + \\varepsilon](https://latex.codecogs.com/png.latex?y_%7Bit%7D%20%3D%20%5Calpha%20%2B%20%5Cbeta%20%5Ctimes%201%28Post%29%20%2B%20%5Clambda%20%5Ctimes%201%28Treat%29%20%2B%20%5Cdelta%20%5Ctimes%201%28Post%29%20%5Ctimes%201%28Treat%29%20%2B%20%5Cvarepsilon "y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Treat) + \delta \times 1(Post) \times 1(Treat) + \varepsilon")
 
 Presentations

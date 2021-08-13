@@ -21,8 +21,7 @@ drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../BibTe
 
 Two-way fixed effects (TWFE) is essentially just a shorthand for a specific and very common regression specification that includes fixed effects for units $i=1,...,N$ and time $t=1,...,T$. I'll denote these by $\gamma_{i}$ and $\gamma_{t}$, respectively. TWFE is more general than a 2x2 DD specification because it allows for intercept shifts for each units and for each time period, as opposed to shifts only among each treated/control group and treated/control period. However, this extra generality doesn't really do much in the case of a single treated group and a single treatment time, since the overall group and overall treatment period dummies in the 2x2 case are effectively an average of the individual unit and individual time period fixed effects, respectively.
 
-More formally, recall our original DD regression specification, 
-
+More formally, recall our original DD regression specification,<br>
 $y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Treat) + \delta \times 1(Post) \times 1(Treat) + \varepsilon$
 
 # Presentations
