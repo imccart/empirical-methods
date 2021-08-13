@@ -36,8 +36,8 @@ What good is a discussion of data and econometrics without some
 practice! Here are some very basic code files to implement the
 estimators described above.
 
--   [Stata Code](../code/Stata-panel.do)
--   [R Code](../code/R-panel.R)
+-   [Stata Code](Stata-panel.do)
+-   [R Code](R-panel.R)
 
 References
 ==========
