@@ -27,7 +27,7 @@ or less repeat the information above but in a presentation format (more
 figures, fewer words).
 
 <a href="https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html">CDC
-Workshop, August 2021</a> \[CDC Workshop, August 2021\]\[\]
+Workshop, August 2021</a>
 
 Code Files
 ==========
