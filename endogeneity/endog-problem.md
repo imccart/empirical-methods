@@ -15,8 +15,8 @@ outcome. As Prof. Oster notes, “Omitted variable bias is proportional to
 coefficient movements, but only if such movements are scaled by the
 change in R-squared when controls are included.”
 
-Oster 2019 <a name="oster"></a>
-===============================
+<a name="oster"></a>Oster 2019
+==============================
 
 Extending the work of Altonji, Elder, and Taber (2005), Oster (2019)
 lays out a scenario in which we can fully decompose our outcome of
@@ -164,8 +164,8 @@ explained by unobservables in order for the true effect to be null
 There is also a Stata command, `psacalc`, to do these calculations for
 us (if you’re a Stata user).
 
-Cinelli and Hazlett 2020 <a name="cinelli"></a>
-===============================================
+<a name="cinelli"></a>Cinelli and Hazlett 2020
+==============================================
 
 Cinelli and Hazlett (2020) offers a more general approach that does not
 require functional form assumptions on treatment assignment or on the
