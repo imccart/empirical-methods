@@ -59,7 +59,7 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
                scales, plotly, gganimate, cobalt, ivpack, stargazer, haven, ggthemes,
-               gifski, magick, lfe, dotwhisker, here)
+               gifski, magick, lfe, dotwhisker, here, modelsummary)
 set.seed(1234)
 ```
 
@@ -317,6 +317,99 @@ name: handson
 
 ---
 # Application
-
 - Try out some real data on Medicaid expansion following the ACA
-- Data available at ...
+- Data available on GitHub (see code files for links)
+
+
+--
+Question: Did Medicaid expansion reduce uninsurance?
+
+---
+# Step 1: Look at the data
+
+.pull-left[
+**Stata**<br>
+```{stata, eval=FALSE}
+insheet using "https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt", clear
+gen perc_unins=uninsured/adult_pop
+keep if expand_year=="2014" | expand_year=="NA"
+drop if expand_ever=="NA"
+collapse (mean) perc_unins, by(year expand_ever)
+graph twoway (connected perc_unins year if expand_ever=="FALSE", color(black) lpattern(solid)) ///
+  (connected perc_unins year if expand_ever=="TRUE", color(black) lpattern(dash)), ///
+  xline(2013.5) ///
+	ytitle("Fraction Uninsured") xtitle("Year") legend(off) text(0.15 2017 "Non-expansion", place(e)) text(0.08 2017 "Expansion", place(e))
+```
+]
+
+.pull-right[
+**R**<br>
+```{r, eval=FALSE}
+library(tidyverse)  
+mcaid.data <- read_tsv("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt")
+ins.plot.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(perc_unins=uninsured/adult_pop) %>%
+  group_by(expand_ever, year) %>% summarize(mean=mean(perc_unins))
+
+ins.plot <- ggplot(data=ins.plot.dat, aes(x=year,y=mean,group=expand_ever,linetype=expand_ever)) + 
+  geom_line() + geom_point() + theme_bw() +
+  geom_vline(xintercept=2013.5, color="red") +
+  geom_text(data = ins.plot.dat %>% filter(year == 2016), 
+            aes(label = c("Non-expansion","Expansion"),
+                x = year + 1,
+                y = mean)) +
+  guides(linetype=FALSE) +
+  labs(
+    x="Year",
+    y="Fraction Uninsured",
+    title="Share of Uninsured over Time"
+  )
+```
+]
+
+
+---
+# Step 2: Estimate Effects
+Interested in $\delta$ from:
+$$y_{it} = \alpha + \beta \times 1(Post) + \gamma \times 1(Expand) + \delta \times 1(Post) \times 1(Expand) + \varepsilon$$
+
+.pull-left[
+**Stata**<br>
+```{stata, eval=FALSE}
+insheet using "https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt", clear
+gen perc_unins=uninsured/adult_pop
+keep if expand_year=="2014" | expand_year=="NA"
+drop if expand_ever=="NA"
+gen post=(year>=2014)
+gen treat=(expand_ever=="TRUE")
+gen treat_post=(expand=="TRUE")
+
+reg perc_unins treat post treat_post
+
+**also try didregress
+```
+]
+
+.pull-right[
+**R**<br>
+```{r, eval=FALSE}
+library(tidyverse)
+library(modelsummary)
+mcaid.data <- read_tsv("https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt")
+reg.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(perc_unins=uninsured/adult_pop,
+         post = (year>=2014), 
+         treat=post*expand_ever)
+
+dd.ins.reg <- lm(perc_unins ~ post + expand_ever + post*expand_ever, data=reg.dat)
+msummary(dd.ins.reg)
+```
+]
+
+---
+# Final thoughts
+
+- Key identification assumption is **parallel trends**
+- We've ignored any issues with inference
+- Typically want to cluster at unit-level to allow for correlation over time within units
+- "Extra" things like propensity score weighting and doubly robust estimation
