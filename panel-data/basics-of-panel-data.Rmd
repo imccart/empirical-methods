@@ -27,7 +27,7 @@ Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and ov
 # Presentations
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
 
-- [CDC Workshop, August 2021][1]
+[CDC Workshop, August 2021][https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html]
 
 
 
@@ -40,7 +40,3 @@ What good is a discussion of data and econometrics without some practice! Here a
 
 
 # References
-
-
-
-[1]: https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html
