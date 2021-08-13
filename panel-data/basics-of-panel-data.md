@@ -26,8 +26,8 @@ Below are some presentations I’ve made in different settings. These more
 or less repeat the information above but in a presentation format (more
 figures, fewer words).
 
--   [CDC Workshop August
-    2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
+[CDC Workshop, August
+2021](https://imccart.github.io/empirical-methods/panel-data/slides/intro-cdc202108.html)
 
 Code Files
 ==========
