@@ -28,3 +28,12 @@ dotwhisker
 here
 modelsummary
 fixest
+data.table
+carData
+car
+zoo
+lmtest
+sandwich
+survival
+AER
+ivpack
