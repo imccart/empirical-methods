@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Navigating Empirical Methods</title>
+
+    <meta name="author" content="Ian McCarthy" />
+  
+   <meta name="description" content="<p>This is a working bookdown version of a workshop and future class, “Navigating Empirical Methods”</p>" />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Navigating Empirical Methods" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="<p>This is a working bookdown version of a workshop and future class, “Navigating Empirical Methods”</p>" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Navigating Empirical Methods" />
+  
+  <meta name="twitter:description" content="<p>This is a working bookdown version of a workshop and future class, “Navigating Empirical Methods”</p>" />
+  
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/jquery/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat/tabs.js"></script>
+    <script src="libs/bs3compat/bs3compat.js"></script>
+    <link href="libs/bs4_book/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<!--bookdown:title:start-->
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Navigating Empirical Methods</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="overview" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>With all of the recent developments in methods for applied empirical micro, it can be difficult to keep everything organized. Should I try synthetic control? I have an instrument, but what tests should I run? How sensitive are my IV results to outliers or to weak instruments? What was the name of that RD test again, and why do some people bin the outcome first?</p>
+<p>I put these diagrams and links together to help me keep some of this straight. These aren’t comprehensive, but I think they serve as a decent reference for the key things to keep in mind, standard tests to consider, and alternative estimators (when relevant). I’m updating these things constantly as I find new information and correct my own misunderstanding. If you see something awry, please <a href="#contact">let me know</a>!</p>
+<p>Now, the goal with all of this is <strong>NOT</strong> to teach the statistics of any given estimator or research design.</p>
+<center>
+<iframe src="https://giphy.com/embed/XyOrJljDNBEpa" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+</center>
+<p>The goal is to navigate all of the other stuff that you have to do before you can even rely on the results of such an estimation. Estimating something with RD, DD, or IV is one thing, but providing convincing evidence of a causal effect is a much bigger question (and, I would argue, is the implicit goal of anyone using these methods anyway).</p>
+<!--chapter:end:index.Rmd-->
+</div>
+<div id="endogeneity" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Endogeneity</h1>
+<p>It would be great if we could test for whether we really had an endogeneity problem or not. But alas, that’s just not in the cards. Instead, a good starting point is to see “how much” of an endogeneity problem we’d have to have to overturn our current results. There are several papers in this area. Here, I’ll mention just two that also have supporting Stata or R code. Those papers are <a href="#oster">Oster 2019</a> and <a href="#cinelli">Cinelli and Hazlett 2020</a>.</p>
+<p>In both cases, the idea is as follows… Lots of applied researchers assess “coefficient stability” by including different sets of control variables that are intended to proxy for some potentially important unobserved factor. This is not informative of omitted variables bias if the existing controls already do a very poor job of explaining the outcome. As Prof. Oster notes, “Omitted variable bias is proportional to coefficient movements, but only if such movements are scaled by the change in R-squared when controls are included.”</p>
+<div id="oster" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Oster 2019</h2>
+<p>Extending the work of <span class="citation"><a href="#ref-altonji2005" role="doc-biblioref">Altonji, Elder, and Taber</a> (<a href="#ref-altonji2005" role="doc-biblioref">2005</a>)</span>, <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> lays out a scenario in which we can fully decompose our outcome of interest into a treatment effect (denoted <span class="math inline">\(\beta\)</span>), observed controls (denoted by <span class="math inline">\(W_{1}\)</span>), unobserved controls (denoted by <span class="math inline">\(W_{2}\)</span>), and some iid error term. Denote by <span class="math inline">\(X\)</span> the treatment variable, such that</p>
+<p><span class="math display">\[
+Y = \beta X + W_{1} + W_{2} + \epsilon.
+\]</span></p>
+<p>We then need to consider values (or a range of values) for two key objects.</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the maximum <span class="math inline">\(R^2\)</span> value we could obtain if we observed <span class="math inline">\(W_{2}\)</span>? Let’s call this <span class="math inline">\(R_{\text{max}}^{2}\)</span>. If we think the outcome is fully deterministic if we were to observe all relevant variables, then <span class="math inline">\(R_{\text{max}}^{2}=1\)</span>, but we could consider smaller values as well.</p></li>
+<li><p>What is the degree of selection on observed variables relative to unobserved variables? We can denote this value as <span class="math inline">\(\delta\)</span>, and define <span class="math inline">\(\delta\)</span> as the value such that: <span class="math display">\[\delta \times \frac{Cov(W_{1},X)}{Var(W_{1})} = \frac{Cov(W_{2},X)}{Var(W_{2})}.\]</span></p></li>
+</ol>
+<p>We then need to define a few objects that we can directly estimate with the data:</p>
+<ol style="list-style-type: decimal">
+<li><p>Denote by <span class="math inline">\(R^{2}_{X}\)</span> the <span class="math inline">\(R^{2}\)</span> from a regression of <span class="math inline">\(Y\)</span> on treatment (and only treatment, no covariates). Similarly denote by <span class="math inline">\(\hat{\beta}_{X}\)</span> the value of <span class="math inline">\(\beta\)</span> estimated from that regression.</p></li>
+<li><p>Denote by <span class="math inline">\(R^{2}_{X,W_{1}}\)</span> the <span class="math inline">\(R^{2}\)</span> from a regression of <span class="math inline">\(Y\)</span> on treatment and observed controls. Again, denote the estimated value of <span class="math inline">\(\beta\)</span> from this regression as <span class="math inline">\(\hat{\beta}_{X, W_{1}}\)</span>.</p></li>
+</ol>
+<p>Under the assumption that the relative size of coefficients from a regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> and observed variables are equal to those from a regression of <span class="math inline">\(X\)</span> and the observed variables, <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> then shows that the true coefficient of interest (<span class="math inline">\(\beta\)</span> from the full regression) converges to the following:</p>
+<p><span class="math display">\[\beta^{*} \approx \hat{\beta}_{X,W_{1}} - \delta \times \left[\hat{\beta}_{X} - \hat{\beta}_{X,W_{1}}\right] \times \frac{R_{max}^{2} - R_{X,W_{1}}^{2}}{R_{X,W_{1}}^{2} - R_{X}^{2}} \xrightarrow{p} \beta.\]</span></p>
+<p>If we relax the assumption of equal “relative contributions” between the observed covariates and <span class="math inline">\(Y\)</span> versus the observed covariates and <span class="math inline">\(X\)</span>, then the results are a little more complicated. In that case, <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> shows that <span class="math display">\[\beta^{*} = \hat{\beta}_{X,W_{1}} - \nu_{1} \xrightarrow{p} \beta,\]</span> or <span class="math display">\[\beta^{*} \in \left\{ \hat{\beta}_{X,W_{1}} - \nu_{1}, \hat{\beta}_{X,W_{1}} - \nu_{2}, \hat{\beta}_{X,W_{1}} - \nu_{3} \right\},\]</span>
+where <span class="math inline">\(\nu_{1}\)</span>, <span class="math inline">\(\nu_{2}\)</span>, and <span class="math inline">\(\nu_{3}\)</span> are roots of a cubic function, <span class="math inline">\(f(\nu)\)</span>, derived in the paper. In the case of more than one root, then one element of <span class="math inline">\(\beta^{*}\)</span> converges in probability to <span class="math inline">\(\beta\)</span>. If <span class="math inline">\(\delta=1\)</span>, then some additional simplifications can be made, but the point is that we now have an expression for the bias as a function of <span class="math inline">\(\delta\)</span> and <span class="math inline">\(R^{2}_{max}\)</span>.</p>
+<p>So what do we gain from all of this? Well, <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> shows that we can also work backwards and find the value of <span class="math inline">\(\delta\)</span> such that <span class="math inline">\(\beta=0\)</span>. In other words, say we estimate using OLS some effect, <span class="math inline">\(\hat{\beta}_{X, W_{1}}\)</span>. How big must the role of selection on unobservables be in order to completely overpower our estimate such that the true effect is actually 0?</p>
+<p>Another approach is to consider a range of <span class="math inline">\(R^{2}_{max}\)</span> and <span class="math inline">\(\delta\)</span> to bound the estimated treatment effect. Using <span class="math inline">\(\delta=1\)</span> as an upper bound for <span class="math inline">\(\delta\)</span> (i.e., observables are at least as important as the unobservables), and <span class="math inline">\(\bar{R}^{2}_{max}\)</span> as an upper bound for <span class="math inline">\(R^{2}_{max}\)</span>, then the bounds on <span class="math inline">\(\beta^{*}\)</span> are <span class="math inline">\(\left[ \hat{\beta}_{X,W_{1}}, \beta^{*}(\bar{R}^{2}_{max}, 1) \right]\)</span>.</p>
+<p>Finally, <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> suggests setting <span class="math inline">\(\delta=1\)</span> and identifying the value of <span class="math inline">\(R^{2}_{max}\)</span> for which <span class="math inline">\(\beta=0\)</span>. This would tell us how much of the variation in <span class="math inline">\(Y\)</span> would need to be explained by unobservables in order for the true effect to be null (given our estimate, <span class="math inline">\(\hat{\beta}_{X,W_{1}}\)</span>.</p>
+<p>There is also a Stata command, <code>psacalc</code>, to do these calculations for us (if you’re a Stata user).</p>
+</div>
+<div id="cinelli" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Cinelli and Hazlett 2020</h2>
+<p><span class="citation"><a href="#ref-cinelli2020" role="doc-biblioref">Cinelli and Hazlett</a> (<a href="#ref-cinelli2020" role="doc-biblioref">2020</a>)</span> offers a more general approach that does not require functional form assumptions on treatment assignment or on the distribution of unobserved confounders. The intuition of their approach is similar, but I see it as more general than <span class="citation"><a href="#ref-oster2019" role="doc-biblioref">Oster</a> (<a href="#ref-oster2019" role="doc-biblioref">2019</a>)</span> and others. That said, one sensitivity measure proposed in <span class="citation"><a href="#ref-cinelli2020" role="doc-biblioref">Cinelli and Hazlett</a> (<a href="#ref-cinelli2020" role="doc-biblioref">2020</a>)</span> requires users to impose some form of a “baseline” covariate in order to gauge relative strength of omitted variables. Once such a variable is specified, we can consider how big confounding must be relative to this relationship estimated from your data. You have to say what this “other relationship” is. And I’m not entirely clearly how this measure works if this estimated relationship is itself subject to endogeneity concerns.</p>
+<p>Nonetheless, they also have a program to implement their analysis in both Stata and R, <a href="https://github.com/carloscinelli/sensemakr">sensemakr</a>.</p>
+</div>
+<div id="references" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> References</h2>
+<!--chapter:end:../endogeneity/endog.Rmd-->
+</div>
+</div>
+<div id="instrumental-variables" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Instrumental Variables</h1>
+<div id="does-iv-do-anything" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Does IV do anything?</h2>
+<p>It would be great if we could test for whether we need IV or not. While we can’t really do that, we can at least see how different our IV results might be relative to OLS (assuming we have some decent instruments already).</p>
+<center>
+<iframe src="https://giphy.com/embed/ZExucn4EDMUtX0p9dt" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+</center>
+<p>An easy way to assess the need for IV is to simply test whether your IV results are sufficiently different from OLS. That’s the spirit of the Hausman test. The original test introduced in <span class="citation"><a href="#ref-hausman1978" role="doc-biblioref">Hausman</a> (<a href="#ref-hausman1978" role="doc-biblioref">1978</a>)</span> is not specific to endogeneity…it’s a more general misspecification test, comparing the estimates from one estimator (that is efficient under the null) to that of another estimator that is consistent but inefficient under the null. The test in the context of IV is also referred to as the Durbin-Wu-Hausman test, due to the series of papers pre-dating <span class="citation"><a href="#ref-hausman1978" role="doc-biblioref">Hausman</a> (<a href="#ref-hausman1978" role="doc-biblioref">1978</a>)</span>, including <span class="citation"><a href="#ref-durbin1954" role="doc-biblioref">Durbin</a> (<a href="#ref-durbin1954" role="doc-biblioref">1954</a>)</span>, <span class="citation"><a href="#ref-wu1973" role="doc-biblioref">Wu</a> (<a href="#ref-wu1973" role="doc-biblioref">1973</a>)</span>, and <span class="citation"><a href="#ref-wu1974" role="doc-biblioref">Wu</a> (<a href="#ref-wu1974" role="doc-biblioref">1974</a>)</span>.</p>
+<p>This test is easily implemented as an “artificial” or “augmented” regression. Denoting our outcome by <span class="math inline">\(y\)</span>, our instruments by <span class="math inline">\(z\)</span>, our endogeous variables by <span class="math inline">\(x_{1}\)</span>, and other exogenous variables by <span class="math inline">\(x_{2}\)</span>, we first regress each of the variables in <span class="math inline">\(x_{1}\)</span> on <span class="math inline">\(x_{2}\)</span> and <span class="math inline">\(z\)</span>. Then we take the residuals from those regressions, denoted <span class="math inline">\(\hat{v}\)</span>, and include them in the standard OLS regression of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_{1}\)</span>, <span class="math inline">\(x_{2}\)</span>, and <span class="math inline">\(\hat{v}\)</span>.</p>
+<p>The biggest barrier to this test in practice is that it assumes we have a valid and strong set of instruments, <span class="math inline">\(z\)</span>. Since that’s usually the biggest barrier to causal inference with IV, it becomes a major practical problem. For example, if you reject the null and conclude that estimates from OLS and IV are statistically different, can you be sure that the difference is “real” and not a statistical artifact of weak or invalid instruments? The whole process becomes pretty circular.</p>
+<center>
+<iframe src="https://giphy.com/embed/dyGiQTZrrASFWp9qP8" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+</center>
+</div>
+<div id="references-1" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> References</h2>
+<!--chapter:end:../instrumental-variables/iv.Rmd-->
+</div>
+</div>
+<div id="difference-in-differences" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Difference-in-Differences</h1>
+<div id="what-is-panel-data" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> What is Panel Data?</h2>
+<p>Panel data describes the setting in which we have repeated observations over time for the same units (e.g., people, firms, counties, etc.). Such data often present an opportunity to estimate causal effects more convincingly than in a purely cross-sectional setting, although that’s certainly not always the case. I’d much rather read a strong analysis of “lesser” data than a poor analysis of “better” data. But all else equal, panel data tend to contain more information and more dimensions of variation than we see in cross-sectional data, and thus more opportunities for causal inference.</p>
+<p>Slightly more formally, we observe some outcome <span class="math inline">\(y\)</span> for units <span class="math inline">\(i=1,...,N\)</span> and over time periods <span class="math inline">\(t=1,...,T\)</span>. We denote the outcome for a given unit and time by <span class="math inline">\(y_{it}\)</span>. Keeping with our potential outcomes framework and notation, let’s assume that some units receive treatment at some time <span class="math inline">\(t\)</span>, which we denote by the indicator <span class="math inline">\(1(D_{it}=1)\)</span>. We also observe some other time-varying characteristics for each unit, denoted <span class="math inline">\(W_{it}\)</span>.</p>
+</div>
+<div id="what-is-difference-in-differences" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> What is Difference-in-Differences?</h2>
+<p>Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment <em>would have</em> evolved just as the outcomes for those that did not receive treatment (on average).</p>
+</div>
+<div id="presentations" class="section level2" number="4.3">
+<h2 number="4.3"><span class="header-section-number">4.3</span> Presentations</h2>
+<p>Below are some presentations I’ve made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words).</p>
+<iframe src="https://imccart.github.io/empirical-methods/difference-in-differences/slides/intro-cdc202108.html" width="672" height="400px">
+</iframe>
+<p><a href="https://imccart.github.io/empirical-methods/panel-data/slides/did-cdc202108.html">CDC Workshop, August 2021</a></p>
+</div>
+<div id="code-files" class="section level2" number="4.4">
+<h2 number="4.4"><span class="header-section-number">4.4</span> Code Files</h2>
+<p>What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.</p>
+<ul>
+<li><p><a href="code/Stata-panel.do">Stata Code</a></p></li>
+<li><p><a href="code/R-panel.R">R Code</a></p></li>
+<li><p><a href="code/Stata-did.do">Stata Code</a></p></li>
+<li><p><a href="code/R-did.R">R Code</a></p></li>
+</ul>
+<!--chapter:end:../difference-in-differences/dd.Rmd-->
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-altonji2005" class="csl-entry">
+Altonji, Joseph G, Todd E Elder, and Christopher R Taber. 2005. <span>“An Evaluation of Instrumental Variable Strategies for Estimating the Effects of Catholic Schooling.”</span> <em>Journal of Human Resources</em> 40 (4): 791–821.
+</div>
+<div id="ref-cinelli2020" class="csl-entry">
+Cinelli, Carlos, and Chad Hazlett. 2020. <span>“Making Sense of Sensitivity: Extending Omitted Variable Bias.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 82 (1): 39–67.
+</div>
+<div id="ref-durbin1954" class="csl-entry">
+Durbin, James. 1954. <span>“Errors in Variables.”</span> <em>Revue de l’institut International de Statistique</em>, 23–32.
+</div>
+<div id="ref-hausman1978" class="csl-entry">
+Hausman, Jerry A. 1978. <span>“Specification Tests in Econometrics.”</span> <em>Econometrica: Journal of the Econometric Society</em>, 1251–71.
+</div>
+<div id="ref-oster2019" class="csl-entry">
+Oster, Emily. 2019. <span>“Unobservable Selection and Coefficient Stability: Theory and Evidence.”</span> <em>Journal of Business &amp; Economic Statistics</em> 37 (2): 187–204. <a href="https://doi.org/10.1080/07350015.2016.1227711">https://doi.org/10.1080/07350015.2016.1227711</a>.
+</div>
+<div id="ref-wu1973" class="csl-entry">
+Wu, De-Min. 1973. <span>“Alternative Tests of Independence Between Stochastic Regressors and Disturbances.”</span> <em>Econometrica: Journal of the Econometric Society</em>, 733–50.
+</div>
+<div id="ref-wu1974" class="csl-entry">
+———. 1974. <span>“Alternative Tests of Independence Between Stochastic Regressors and Disturbances: Finite Sample Results.”</span> <em>Econometrica: Journal of the Econometric Society</em>, 529–46.
+</div>
+</div>
+</div>
+</div>
+<!--bookdown:body:end-->
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Navigating Empirical Methods</strong>" was written by Ian McCarthy. It was last built on 2021-08-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+
+</html>

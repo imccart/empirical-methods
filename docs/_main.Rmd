@@ -1,0 +1,146 @@
+--- 
+title: "Navigating Empirical Methods"
+author: "Ian McCarthy"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a working bookdown version of a workshop and future class, "Navigating Empirical Methods"
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# Overview
+
+With all of the recent developments in methods for applied empirical micro, it can be difficult to keep everything organized. Should I try synthetic control? I have an instrument, but what tests should I run? How sensitive are my IV results to outliers or to weak instruments? What was the name of that RD test again, and why do some people bin the outcome first?
+
+I put these diagrams and links together to help me keep some of this straight. These aren't comprehensive, but I think they serve as a decent reference for the key things to keep in mind, standard tests to consider, and alternative estimators (when relevant). I'm updating these things constantly as I find new information and correct my own misunderstanding. If you see something awry, please [let me know](#contact)!
+
+Now, the goal with all of this is **NOT** to teach the statistics of any given estimator or research design. 
+
+<center>
+<iframe src="https://giphy.com/embed/XyOrJljDNBEpa" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+</center>
+
+The goal is to navigate all of the other stuff that you have to do before you can even rely on the results of such an estimation. Estimating something with RD, DD, or IV is one thing, but providing convincing evidence of a causal effect is a much bigger question (and, I would argue, is the implicit goal of anyone using these methods anyway).
+
+<!--chapter:end:index.Rmd-->
+
+# Endogeneity
+
+It would be great if we could test for whether we really had an endogeneity problem or not. But alas, that's just not in the cards. Instead, a good starting point is to see "how much" of an endogeneity problem we'd have to have to overturn our current results. There are several papers in this area. Here, I'll mention just two that also have supporting Stata or R code. Those papers are [Oster 2019](#oster) and [Cinelli and Hazlett 2020](#cinelli).
+
+In both cases, the idea is as follows... Lots of applied researchers assess "coefficient stability" by including different sets of control variables that are intended to proxy for some potentially important unobserved factor. This is not informative of omitted variables bias if the existing controls already do a very poor job of explaining the outcome. As Prof. Oster notes, "Omitted variable bias is proportional to coefficient movements, but only if such movements are scaled by the change in R-squared when controls are included."
+
+
+## Oster 2019 {#oster}
+
+Extending the work of @altonji2005, @oster2019 lays out a scenario in which we can fully decompose our outcome of interest into a treatment effect (denoted $\beta$), observed controls (denoted by $W_{1}$), unobserved controls (denoted by $W_{2}$), and some iid error term. Denote by $X$ the treatment variable, such that 
+
+$$
+Y = \beta X + W_{1} + W_{2} + \epsilon.
+$$
+
+We then need to consider values (or a range of values) for two key objects. 
+
+1. What is the maximum $R^2$ value we could obtain if we observed $W_{2}$? Let's call this $R_{\text{max}}^{2}$. If we think the outcome is fully deterministic if we were to observe all relevant variables, then $R_{\text{max}}^{2}=1$, but we could consider smaller values as well.
+
+2. What is the degree of selection on observed variables relative to unobserved variables? We can denote this value as $\delta$, and define $\delta$ as the value such that: $$\delta \times \frac{Cov(W_{1},X)}{Var(W_{1})} = \frac{Cov(W_{2},X)}{Var(W_{2})}.$$
+
+We then need to define a few objects that we can directly estimate with the data:
+
+1. Denote by $R^{2}_{X}$ the $R^{2}$ from a regression of $Y$ on treatment (and only treatment, no covariates). Similarly denote by $\hat{\beta}_{X}$ the value of $\beta$ estimated from that regression. 
+
+2. Denote by $R^{2}_{X,W_{1}}$ the $R^{2}$ from a regression of $Y$ on treatment and observed controls. Again, denote the estimated value of $\beta$ from this regression as $\hat{\beta}_{X, W_{1}}$. 
+
+Under the assumption that the relative size of coefficients from a regression of $Y$ on $X$ and observed variables are equal to those from a regression of $X$ and the observed variables, @oster2019 then shows that the true coefficient of interest ($\beta$ from the full regression) converges to the following:
+
+$$\beta^{*} \approx \hat{\beta}_{X,W_{1}} - \delta \times \left[\hat{\beta}_{X} - \hat{\beta}_{X,W_{1}}\right] \times \frac{R_{max}^{2} - R_{X,W_{1}}^{2}}{R_{X,W_{1}}^{2} - R_{X}^{2}} \xrightarrow{p} \beta.$$
+
+If we relax the assumption of equal "relative contributions" between the observed covariates and $Y$ versus the observed covariates and $X$, then the results are a little more complicated. In that case, @oster2019 shows that $$\beta^{*} = \hat{\beta}_{X,W_{1}} - \nu_{1} \xrightarrow{p} \beta,$$ or $$\beta^{*} \in \left\{ \hat{\beta}_{X,W_{1}} - \nu_{1}, \hat{\beta}_{X,W_{1}} - \nu_{2}, \hat{\beta}_{X,W_{1}} - \nu_{3} \right\},$$
+where $\nu_{1}$, $\nu_{2}$, and $\nu_{3}$ are roots of a cubic function, $f(\nu)$, derived in the paper. In the case of more than one root, then one element of $\beta^{*}$ converges in probability to $\beta$. If $\delta=1$, then some additional simplifications can be made, but the point is that we now have an expression for the bias as a function of $\delta$ and $R^{2}_{max}$. 
+
+So what do we gain from all of this? Well, @oster2019 shows that we can also work backwards and find the value of $\delta$ such that $\beta=0$. In other words, say we estimate using OLS some effect, $\hat{\beta}_{X, W_{1}}$. How big must the role of selection on unobservables be in order to completely overpower our estimate such that the true effect is actually 0? 
+
+Another approach is to consider a range of $R^{2}_{max}$ and $\delta$ to bound the estimated treatment effect. Using $\delta=1$ as an upper bound for $\delta$ (i.e., observables are at least as important as the unobservables), and $\bar{R}^{2}_{max}$ as an upper bound for $R^{2}_{max}$, then the bounds on $\beta^{*}$ are $\left[ \hat{\beta}_{X,W_{1}}, \beta^{*}(\bar{R}^{2}_{max}, 1) \right]$.
+
+Finally, @oster2019 suggests setting $\delta=1$ and identifying the value of $R^{2}_{max}$ for which $\beta=0$. This would tell us how much of the variation in $Y$ would need to be explained by unobservables in order for the true effect to be null (given our estimate, $\hat{\beta}_{X,W_{1}}$.
+
+There is also a Stata command, `psacalc`, to do these calculations for us (if you're a Stata user). 
+
+## Cinelli and Hazlett 2020 {#cinelli}
+
+@cinelli2020 offers a more general approach that does not require functional form assumptions on treatment assignment or on the distribution of unobserved confounders. The intuition of their approach is similar, but I see it as more general than @oster2019 and others. That said, one sensitivity measure proposed in @cinelli2020 requires users to impose some form of a "baseline" covariate in order to gauge relative strength of omitted variables. Once such a variable is specified, we can consider how big confounding must be relative to this relationship estimated from your data. You have to say what this "other relationship" is. And I'm not entirely clearly how this measure works if this estimated relationship is itself subject to endogeneity concerns. 
+
+Nonetheless, they also have a program to implement their analysis in both Stata and R, [sensemakr](https://github.com/carloscinelli/sensemakr).
+
+
+## References
+
+<!--chapter:end:../endogeneity/endog.Rmd-->
+
+# Instrumental Variables
+
+
+## Does IV do anything?
+It would be great if we could test for whether we need IV or not. While we can't really do that, we can at least see how different our IV results might be relative to OLS (assuming we have some decent instruments already).
+
+<center>
+<iframe src="https://giphy.com/embed/ZExucn4EDMUtX0p9dt" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+</center>
+
+An easy way to assess the need for IV is to simply test whether your IV results are sufficiently different from OLS. That's the spirit of the Hausman test. The original test introduced in @hausman1978 is not specific to endogeneity...it's a more general misspecification test, comparing the estimates from one estimator (that is efficient under the null) to that of another estimator that is consistent but inefficient under the null. The test in the context of IV is also referred to as the Durbin-Wu-Hausman test, due to the series of papers pre-dating @hausman1978, including @durbin1954, @wu1973, and @wu1974.
+
+This test is easily implemented as an "artificial" or "augmented" regression. Denoting our outcome by $y$, our instruments by $z$, our endogeous variables by $x_{1}$, and other exogenous variables by $x_{2}$, we first regress each of the variables in $x_{1}$ on $x_{2}$ and $z$. Then we take the residuals from those regressions, denoted $\hat{v}$, and include them in the standard OLS regression of $y$ on $x_{1}$, $x_{2}$, and $\hat{v}$.
+
+The biggest barrier to this test in practice is that it assumes we have a valid and strong set of instruments, $z$. Since that's usually the biggest barrier to causal inference with IV, it becomes a major practical problem. For example, if you reject the null and conclude that estimates from OLS and IV are statistically different, can you be sure that the difference is "real" and not a statistical artifact of weak or invalid instruments? The whole process becomes pretty circular.
+
+<center>
+<iframe src="https://giphy.com/embed/dyGiQTZrrASFWp9qP8" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>
+</center>
+
+## References
+
+<!--chapter:end:../instrumental-variables/iv.Rmd-->
+
+# Difference-in-Differences
+
+## What is Panel Data?
+
+Panel data describes the setting in which we have repeated observations over time for the same units (e.g., people, firms, counties, etc.). Such data often present an opportunity to estimate causal effects more convincingly than in a purely cross-sectional setting, although that's certainly not always the case. I'd much rather read a strong analysis of "lesser" data than a poor analysis of "better" data. But all else equal, panel data tend to contain more information and more dimensions of variation than we see in cross-sectional data, and thus more opportunities for causal inference.
+
+Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and over time periods $t=1,...,T$. We denote the outcome for a given unit and time by $y_{it}$. Keeping with our potential outcomes framework and notation, let's assume that some units receive treatment at some time $t$, which we denote by the indicator $1(D_{it}=1)$. We also observe some other time-varying characteristics for each unit, denoted $W_{it}$. 
+
+
+## What is Difference-in-Differences?
+
+Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment *would have* evolved just as the outcomes for those that did not receive treatment (on average).
+
+
+
+
+## Presentations
+Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
+
+```{r echo=FALSE}
+knitr::include_url("https://imccart.github.io/empirical-methods/difference-in-differences/slides/intro-cdc202108.html")
+```
+
+<a href="https://imccart.github.io/empirical-methods/panel-data/slides/did-cdc202108.html">CDC Workshop, August 2021</a>
+
+
+## Code Files
+What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.
+
+- [Stata Code](code/Stata-panel.do)
+- [R Code](code/R-panel.R)
+
+- [Stata Code](code/Stata-did.do)
+- [R Code](code/R-did.R)
+
+
+<!--chapter:end:../difference-in-differences/dd.Rmd-->
+
