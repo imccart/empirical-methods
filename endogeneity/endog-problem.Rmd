@@ -24,7 +24,13 @@ In both cases, the idea is as follows... Lots of applied researchers assess "coe
 
 # Oster 2019 {#oster}
 
-Extending the work of @altonji2005, @oster2019 lays out a scenario in which we can fully decompose our outcome of interest into a treatment effect (denoted $\beta$), observed controls (denoted by $W_{1}$), unobserved controls (denoted by $W_{2}$), and some iid error term. Denote by $X$ the treatment variable, such that $$Y = \beta X + W_{1} + W_{2} + \epsilon.$$ We then need to consider values (or a range of values) for two key objects. 
+Extending the work of @altonji2005, @oster2019 lays out a scenario in which we can fully decompose our outcome of interest into a treatment effect (denoted $\beta$), observed controls (denoted by $W_{1}$), unobserved controls (denoted by $W_{2}$), and some iid error term. Denote by $X$ the treatment variable, such that 
+
+$$
+Y = \beta X + W_{1} + W_{2} + \epsilon.
+$$
+
+We then need to consider values (or a range of values) for two key objects. 
 
 1. What is the maximum $R^2$ value we could obtain if we observed $W_{2}$? Let's call this $R_{\text{max}}^{2}$. If we think the outcome is fully deterministic if we were to observe all relevant variables, then $R_{\text{max}}^{2}=1$, but we could consider smaller values as well.
 

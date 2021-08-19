@@ -15,8 +15,7 @@ outcome. As Prof. Oster notes, “Omitted variable bias is proportional to
 coefficient movements, but only if such movements are scaled by the
 change in R-squared when controls are included.”
 
-Oster 2019
-==========
+# Oster 2019
 
 Extending the work of Altonji, Elder, and Taber (2005), Oster (2019)
 lays out a scenario in which we can fully decompose our outcome of
@@ -30,7 +29,11 @@ some iid error term. Denote by
 ![X](https://latex.codecogs.com/png.latex?X "X") the treatment variable,
 such that
 
-![Y = \\beta X + W\_{1} + W\_{2} + \\epsilon.](https://latex.codecogs.com/png.latex?Y%20%3D%20%5Cbeta%20X%20%2B%20W_%7B1%7D%20%2B%20W_%7B2%7D%20%2B%20%5Cepsilon. "Y = \beta X + W_{1} + W_{2} + \epsilon.")
+![
+Y = \\beta X + W\_{1} + W\_{2} + \\epsilon.
+](https://latex.codecogs.com/png.latex?%0AY%20%3D%20%5Cbeta%20X%20%2B%20W_%7B1%7D%20%2B%20W_%7B2%7D%20%2B%20%5Cepsilon.%0A "
+Y = \beta X + W_{1} + W_{2} + \epsilon.
+")
 
 We then need to consider values (or a range of values) for two key
 objects.
@@ -164,8 +167,7 @@ explained by unobservables in order for the true effect to be null
 There is also a Stata command, `psacalc`, to do these calculations for
 us (if you’re a Stata user).
 
-Cinelli and Hazlett 2020
-========================
+# Cinelli and Hazlett 2020
 
 Cinelli and Hazlett (2020) offers a more general approach that does not
 require functional form assumptions on treatment assignment or on the
@@ -184,18 +186,33 @@ Nonetheless, they also have a program to implement their analysis in
 both Stata and R,
 [sensemakr](https://github.com/carloscinelli/sensemakr).
 
-References
-==========
+# References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-altonji2005" class="csl-entry">
 
 Altonji, Joseph G, Todd E Elder, and Christopher R Taber. 2005. “An
 Evaluation of Instrumental Variable Strategies for Estimating the
 Effects of Catholic Schooling.” *Journal of Human Resources* 40 (4):
 791–821.
 
+</div>
+
+<div id="ref-cinelli2020" class="csl-entry">
+
 Cinelli, Carlos, and Chad Hazlett. 2020. “Making Sense of Sensitivity:
 Extending Omitted Variable Bias.” *Journal of the Royal Statistical
 Society: Series B (Statistical Methodology)* 82 (1): 39–67.
 
+</div>
+
+<div id="ref-oster2019" class="csl-entry">
+
 Oster, Emily. 2019. “Unobservable Selection and Coefficient Stability:
 Theory and Evidence.” *Journal of Business & Economic Statistics* 37
 (2): 187–204. <https://doi.org/10.1080/07350015.2016.1227711>.
+
+</div>
+
+</div>
