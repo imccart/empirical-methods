@@ -11,12 +11,13 @@
 
 * [Untitled](instrumental-variables/untitled.md)
 
-## Panel Data
+## Difference-in-Differences
 
 * [Basics of Panel Data](panel-data/basics-of-panel-data.md)
 * [Difference-in-differences](panel-data/difference-in-differences.md)
 * [TWFE and Event Studies](panel-data/twfe-and-event-studies.md)
-* [Recent Estimators](panel-data/recent-estimators.md)
+* [New DD Estimators](panel-data/new-dd.md)
+* [New Panel Estimators](panel-data/new-panel.md)
 
 ## Regression Discontinuity
 

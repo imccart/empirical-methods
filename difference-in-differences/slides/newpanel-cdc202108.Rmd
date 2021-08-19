@@ -1,5 +1,5 @@
 ---
-title: "New DD Estimators"
+title: "New Panel Estimators"
 subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
 author: Ian McCarthy | Emory University
 date: Workshop on Causal Inference with Panel Data
@@ -66,16 +66,23 @@ set.seed(1234)
 
 # Table of contents
 
-1. [The Issue](#problem)
-2. [Callaway and Sant'anna](#cs)
-3. [Sun and Abraham](#sa)
-
+1. [The Problem of Parallel Trends](#problem)
+2. [Matching with Panels](#matching)
+3. [Synthetic Control](#synth)
+4. [Matrix Completion](#matrix)
 
 ---
 class: inverse, center, middle
 name: problem
 
-# Revisiting the Issue
+# The Problem of Parallel Trends
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
+---
+class: inverse, center, middle
+name: matrix
+
+# Matrix Completion
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>

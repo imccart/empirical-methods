@@ -475,9 +475,10 @@ reg.dat <- as.data.table(mcaid.data) %>%
   filter(!is.na(expand_ever)) %>%
   mutate(perc_unins=uninsured/adult_pop,
          post = (year>=2014), 
-         treat=post*expand_ever)
+         treat=post*expand_ever,
+         time_to_treat = ifelse(expand_ever==FALSE, 0, year-expand_year),
+         time_to_treat = ifelse(time_to_treat < -3, -3, time_to_treat))
 
-reg.dat[, time_to_treat := ifelse(expand_ever==TRUE, year-expand_year, 0)]
 mod.twfe <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + year,
                   cluster=~State,
                   data=reg.dat)

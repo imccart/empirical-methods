@@ -133,6 +133,14 @@ Strategy 3: DD estimate...
 Estimate $E[Y_{1}(1)|W=1] - E[Y_{0}(1)|W=1]$ using $E[Y_{0}(1)|W=0] - E[Y_{0}(0)|W=0]$ (pre-post difference in control group used to predict difference for treatment group)
 
 ---
+# Graphically
+
+.center[
+  ![:scale 900px](../../pics/standard-dd.png)
+]
+
+
+---
 # Animations!
 ```{r animate, message=FALSE, warning=FALSE, include=FALSE}
 df <- data.frame(Control = c(rep("Control",150),rep("Treatment",150)),

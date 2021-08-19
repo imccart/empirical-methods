@@ -21,7 +21,7 @@ drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../BibTe
 
 Panel data describes the setting in which we have repeated observations over time for the same units (e.g., people, firms, counties, etc.). Such data often present an opportunity to estimate causal effects more convincingly than in a purely cross-sectional setting, although that's certainly not always the case. I'd much rather read a strong analysis of "lesser" data than a poor analysis of "better" data. But all else equal, panel data tend to contain more information and more dimensions of variation than we see in cross-sectional data, and thus more opportunities for causal inference.
 
-Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and over time period $t=1,...,T$. We denote the outcome for a given unit and time by $y_{it}$. 
+Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and over time periods $t=1,...,T$. We denote the outcome for a given unit and time by $y_{it}$. Keeping with our potential outcomes framework and notation, let's assume that some units receive treatment at some time $t$, which we denote by the indicator $1(D_{it}=1)$. We also observe some other time-varying characteristics for each unit, denoted $W_{it}$. 
 
 
 # Presentations
