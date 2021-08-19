@@ -17,9 +17,7 @@ Difference-in-differences (DD) is an identification strategy that essentially at
 ## Presentations
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
 
-```{r echo=FALSE}
-knitr::include_url("https://imccart.github.io/imccart/empirical-methods/difference-in-differences/slides/did-cdc202108.html")
-```
+<iframe seamless width="100%" height="100%" frameborde="0" src="../differences-in-differences/slides/did-cdc202108.html#1"></iframe>
 
 
 
