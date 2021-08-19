@@ -21,7 +21,7 @@ Below are some presentations I've made in different settings. These more or less
 knitr::include_url("https://raw.githubusercontent.com/imccart/empirical-methods/main/difference-in-differences/slides/did-cdc202108.html")
 ```
 
-<a href="https://imccart.github.io/empirical-methods/panel-data/slides/did-cdc202108.html">CDC Workshop, August 2021</a>
+<a href="https://raw.githubusercontent.com/imccart/empirical-methods/main/difference-in-differences/slides/did-cdc202108.html">CDC Workshop, August 2021</a>
 
 
 ## Code Files
