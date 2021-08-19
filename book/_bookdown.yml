@@ -1,0 +1,6 @@
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+rmd_files: ["index.Rmd", "../endogeneity/endog.Rmd", "../instrumental-variables/iv.Rmd",
+            "../difference-in-differences/dd.Rmd"]

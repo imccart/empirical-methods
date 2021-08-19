@@ -1,0 +1,21 @@
+# Instrumental Variables
+
+
+## Does IV do anything?
+It would be great if we could test for whether we need IV or not. While we can't really do that, we can at least see how different our IV results might be relative to OLS (assuming we have some decent instruments already).
+
+<center>
+<iframe src="https://giphy.com/embed/ZExucn4EDMUtX0p9dt" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+</center>
+
+An easy way to assess the need for IV is to simply test whether your IV results are sufficiently different from OLS. That's the spirit of the Hausman test. The original test introduced in @hausman1978 is not specific to endogeneity...it's a more general misspecification test, comparing the estimates from one estimator (that is efficient under the null) to that of another estimator that is consistent but inefficient under the null. The test in the context of IV is also referred to as the Durbin-Wu-Hausman test, due to the series of papers pre-dating @hausman1978, including @durbin1954, @wu1973, and @wu1974.
+
+This test is easily implemented as an "artificial" or "augmented" regression. Denoting our outcome by $y$, our instruments by $z$, our endogeous variables by $x_{1}$, and other exogenous variables by $x_{2}$, we first regress each of the variables in $x_{1}$ on $x_{2}$ and $z$. Then we take the residuals from those regressions, denoted $\hat{v}$, and include them in the standard OLS regression of $y$ on $x_{1}$, $x_{2}$, and $\hat{v}$.
+
+The biggest barrier to this test in practice is that it assumes we have a valid and strong set of instruments, $z$. Since that's usually the biggest barrier to causal inference with IV, it becomes a major practical problem. For example, if you reject the null and conclude that estimates from OLS and IV are statistically different, can you be sure that the difference is "real" and not a statistical artifact of weak or invalid instruments? The whole process becomes pretty circular.
+
+<center>
+<iframe src="https://giphy.com/embed/dyGiQTZrrASFWp9qP8" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>
+</center>
+
+## References
