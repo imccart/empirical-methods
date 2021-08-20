@@ -11,6 +11,7 @@ what-is-panel-data
 what-is-difference-in-differences
 presentations
 code-files
-stata
-r
-other-stuff
+intro-to-panel-data
+basics-of-dd
+twfe-and-event-studies
+recent-dd-advancements

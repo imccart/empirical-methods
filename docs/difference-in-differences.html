@@ -67,7 +67,7 @@
 </h2>
 <p>Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment <em>would have</em> evolved just as the outcomes for those that did not receive treatment (on average).</p>
 </div>
-<div id="presentations" class="section level2 tabset" number="4.3">
+<div id="presentations" class="section level2" number="4.3">
 <h2>
 <span class="header-section-number">4.3</span> Presentations<a class="anchor" aria-label="anchor" href="#presentations"><i class="fas fa-link"></i></a>
 </h2>
@@ -85,15 +85,14 @@
 <a href="https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html">Recent Panel Advancements</a>, <strong>CDC Workshop</strong>, August 2021</li>
 </ul>
 </div>
-<div id="code-files" class="section level2 tabset" number="4.4">
+<div id="code-files" class="section level2" number="4.4">
 <h2>
 <span class="header-section-number">4.4</span> Code Files<a class="anchor" aria-label="anchor" href="#code-files"><i class="fas fa-link"></i></a>
 </h2>
 <p>What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.</p>
-<p><strong>Basics of Panel Data</strong></p>
-<div id="stata" class="section level3" number="4.4.1">
+<div id="intro-to-panel-data" class="section level3" number="4.4.1">
 <h3>
-<span class="header-section-number">4.4.1</span> Stata<a class="anchor" aria-label="anchor" href="#stata"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4.1</span> Intro to Panel Data<a class="anchor" aria-label="anchor" href="#intro-to-panel-data"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="difference-in-differences.html#cb1-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
 <span id="cb1-2"><a href="difference-in-differences.html#cb1-2" aria-hidden="true" tabindex="-1"></a>** Panel <span class="kw">data</span> <span class="kw">estimates</span> <span class="kw">in</span> Stata</span>
@@ -117,11 +116,6 @@
 <span id="cb1-20"><a href="difference-in-differences.html#cb1-20" aria-hidden="true" tabindex="-1"></a>** First differencing</span>
 <span id="cb1-21"><a href="difference-in-differences.html#cb1-21" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span>: the <span class="st">"d."</span> <span class="kw">operator</span> only works with identical time gaps (1 <span class="kw">in</span> <span class="kw">this</span> <span class="kw">case</span>)</span>
 <span id="cb1-22"><a href="difference-in-differences.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> <span class="kw">d</span>.lwage <span class="kw">d</span>.exper <span class="kw">d</span>.expersq, <span class="kw">noconstant</span></span></code></pre></div>
-</div>
-<div id="r" class="section level3" number="4.4.2">
-<h3>
-<span class="header-section-number">4.4.2</span> R<a class="anchor" aria-label="anchor" href="#r"><i class="fas fa-link"></i></a>
-</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">########################################</span>
 <span class="co">## Panel data estimates in R</span>
@@ -153,17 +147,353 @@
   <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fd_lwage</span><span class="op">~</span><span class="fl">0</span> <span class="op">+</span> <span class="va">fd_exper</span> <span class="op">+</span> <span class="va">fd_expersq</span>, data<span class="op">=</span><span class="va">wagepan</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
+<div id="basics-of-dd" class="section level3" number="4.4.2">
+<h3>
+<span class="header-section-number">4.4.2</span> Basics of DD<a class="anchor" aria-label="anchor" href="#basics-of-dd"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="difference-in-differences.html#cb3-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb3-2"><a href="difference-in-differences.html#cb3-2" aria-hidden="true" tabindex="-1"></a>** Differences-<span class="kw">in</span>-Differences <span class="kw">in</span> Stata</span>
+<span id="cb3-3"><a href="difference-in-differences.html#cb3-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb3-4"><a href="difference-in-differences.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb3-5"><a href="difference-in-differences.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="difference-in-differences.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="difference-in-differences.html#cb3-7" aria-hidden="true" tabindex="-1"></a>** Looking <span class="fu">at</span> the <span class="kw">data</span></span>
+<span id="cb3-8"><a href="difference-in-differences.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb3-9"><a href="difference-in-differences.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
+<span id="cb3-10"><a href="difference-in-differences.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb3-11"><a href="difference-in-differences.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">collapse</span> (<span class="kw">mean</span>) perc_unins, <span class="kw">by</span>(<span class="fu">year</span> expand_ever)</span>
+<span id="cb3-12"><a href="difference-in-differences.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"FALSE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(solid)) <span class="co">///</span></span>
+<span id="cb3-13"><a href="difference-in-differences.html#cb3-13" aria-hidden="true" tabindex="-1"></a>  (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"TRUE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(<span class="kw">dash</span>)), <span class="co">///</span></span>
+<span id="cb3-14"><a href="difference-in-differences.html#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="bn">xline</span>(2013.5) <span class="co">///</span></span>
+<span id="cb3-15"><a href="difference-in-differences.html#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Fraction Uninsured"</span>) <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(0.15 2017 <span class="st">"Non-expansion"</span>, place(<span class="fu">e</span>)) <span class="bn">text</span>(0.08 2017 <span class="st">"Expansion"</span>, place(<span class="fu">e</span>))</span>
+<span id="cb3-16"><a href="difference-in-differences.html#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="difference-in-differences.html#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="difference-in-differences.html#cb3-18" aria-hidden="true" tabindex="-1"></a>** Simple 2x2 DD</span>
+<span id="cb3-19"><a href="difference-in-differences.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
+<span id="cb3-20"><a href="difference-in-differences.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
+<span id="cb3-21"><a href="difference-in-differences.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
+<span id="cb3-22"><a href="difference-in-differences.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="difference-in-differences.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> perc_unins treat <span class="kw">post</span> treat_post</span>
+<span id="cb3-24"><a href="difference-in-differences.html#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="difference-in-differences.html#cb3-25" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span> - Stata 17 has didregress that will <span class="kw">do</span> a lot <span class="kw">of</span> <span class="kw">this</span> automatically</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">########################################</span>
+<span class="co">## Difference-in-Differences in R</span>
+<span class="co">########################################</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  
+<span class="va">mcaid.data</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span><span class="op">)</span>
+
+<span class="co">## Looking at the data</span>
+<span class="va">ins.plot.dat</span> <span class="op">&lt;-</span> <span class="va">mcaid.data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">==</span><span class="fl">2014</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">expand_ever</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarize</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">perc_unins</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">ins.plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data<span class="op">=</span><span class="va">ins.plot.dat</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">mean</span>,group<span class="op">=</span><span class="va">expand_ever</span>,linetype<span class="op">=</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept<span class="op">=</span><span class="fl">2013.5</span>, color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ins.plot.dat</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2016</span><span class="op">)</span>, 
+            <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Non-expansion"</span>,<span class="st">"Expansion"</span><span class="op">)</span>,
+                x <span class="op">=</span> <span class="va">year</span> <span class="op">+</span> <span class="fl">1</span>,
+                y <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">guides</span><span class="op">(</span>linetype<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>
+    x<span class="op">=</span><span class="st">"Year"</span>,
+    y<span class="op">=</span><span class="st">"Fraction Uninsured"</span>,
+    title<span class="op">=</span><span class="st">"Share of Uninsured over Time"</span>
+  <span class="op">)</span>
+
+
+<span class="co">## Simple 2x2 DD</span>
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="va">mcaid.data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">==</span><span class="fl">2014</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span>,
+         post <span class="op">=</span> <span class="op">(</span><span class="va">year</span><span class="op">&gt;=</span><span class="fl">2014</span><span class="op">)</span>, 
+         treat<span class="op">=</span><span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span><span class="op">)</span>
+
+<span class="va">dd.ins.reg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">perc_unins</span> <span class="op">~</span> <span class="va">post</span> <span class="op">+</span> <span class="va">expand_ever</span> <span class="op">+</span> <span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span>, data<span class="op">=</span><span class="va">reg.dat</span><span class="op">)</span>
+<span class="fu">msummary</span><span class="op">(</span><span class="va">dd.ins.reg</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="other-stuff" class="section level2" number="4.5">
-<h2>
-<span class="header-section-number">4.5</span> Other stuff<a class="anchor" aria-label="anchor" href="#other-stuff"><i class="fas fa-link"></i></a>
-</h2>
-<ul>
-<li><p><a href="code/Stata-panel.do">Stata Code</a></p></li>
-<li><p><a href="code/R-panel.R">R Code</a></p></li>
-<li><p><a href="code/Stata-did.do">Stata Code</a></p></li>
-<li><p><a href="code/R-did.R">R Code</a></p></li>
-</ul>
+<div id="twfe-and-event-studies" class="section level3" number="4.4.3">
+<h3>
+<span class="header-section-number">4.4.3</span> TWFE and Event Studies<a class="anchor" aria-label="anchor" href="#twfe-and-event-studies"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="difference-in-differences.html#cb5-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb5-2"><a href="difference-in-differences.html#cb5-2" aria-hidden="true" tabindex="-1"></a>** Event Studies <span class="kw">in</span> Stata</span>
+<span id="cb5-3"><a href="difference-in-differences.html#cb5-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb5-4"><a href="difference-in-differences.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install reghdfe</span>
+<span id="cb5-5"><a href="difference-in-differences.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="difference-in-differences.html#cb5-6" aria-hidden="true" tabindex="-1"></a>** Common treatment timing</span>
+<span id="cb5-7"><a href="difference-in-differences.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb5-8"><a href="difference-in-differences.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb5-9"><a href="difference-in-differences.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
+<span id="cb5-10"><a href="difference-in-differences.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb5-11"><a href="difference-in-differences.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
+<span id="cb5-12"><a href="difference-in-differences.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
+<span id="cb5-13"><a href="difference-in-differences.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
+<span id="cb5-14"><a href="difference-in-differences.html#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="difference-in-differences.html#cb5-15" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins treat##ib2013.<span class="fu">year</span>, absorb(state)</span>
+<span id="cb5-16"><a href="difference-in-differences.html#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
+<span id="cb5-17"><a href="difference-in-differences.html#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
+<span id="cb5-18"><a href="difference-in-differences.html#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2012(1)2018 {</span>
+<span id="cb5-19"><a href="difference-in-differences.html#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
+<span id="cb5-20"><a href="difference-in-differences.html#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
+<span id="cb5-21"><a href="difference-in-differences.html#cb5-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-22"><a href="difference-in-differences.html#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="difference-in-differences.html#cb5-23" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
+<span id="cb5-24"><a href="difference-in-differences.html#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
+<span id="cb5-25"><a href="difference-in-differences.html#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
+<span id="cb5-26"><a href="difference-in-differences.html#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="difference-in-differences.html#cb5-27" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
+<span id="cb5-28"><a href="difference-in-differences.html#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">year</span> coef se ci_*</span>
+<span id="cb5-29"><a href="difference-in-differences.html#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
+<span id="cb5-30"><a href="difference-in-differences.html#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="difference-in-differences.html#cb5-31" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
+<span id="cb5-32"><a href="difference-in-differences.html#cb5-32" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
+<span id="cb5-33"><a href="difference-in-differences.html#cb5-33" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
+<span id="cb5-34"><a href="difference-in-differences.html#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef <span class="fu">year</span>, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom <span class="fu">year</span>) <span class="co">///</span></span>
+<span id="cb5-35"><a href="difference-in-differences.html#cb5-35" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(2012 2018)), <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="co">///</span></span>
+<span id="cb5-36"><a href="difference-in-differences.html#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>)</span>
+<span id="cb5-37"><a href="difference-in-differences.html#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="difference-in-differences.html#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="difference-in-differences.html#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="difference-in-differences.html#cb5-40" aria-hidden="true" tabindex="-1"></a>** Differential treatment timing</span>
+<span id="cb5-41"><a href="difference-in-differences.html#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb5-42"><a href="difference-in-differences.html#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb5-43"><a href="difference-in-differences.html#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb5-44"><a href="difference-in-differences.html#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb5-45"><a href="difference-in-differences.html#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb5-46"><a href="difference-in-differences.html#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb5-47"><a href="difference-in-differences.html#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> event_time=-1 <span class="kw">if</span> event_time==.</span>
+<span id="cb5-48"><a href="difference-in-differences.html#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="difference-in-differences.html#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
+<span id="cb5-50"><a href="difference-in-differences.html#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
+<span id="cb5-51"><a href="difference-in-differences.html#cb5-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-52"><a href="difference-in-differences.html#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
+<span id="cb5-53"><a href="difference-in-differences.html#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
+<span id="cb5-54"><a href="difference-in-differences.html#cb5-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-55"><a href="difference-in-differences.html#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
+<span id="cb5-56"><a href="difference-in-differences.html#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="difference-in-differences.html#cb5-57" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins F3event F2event L0event L1event L2event L3event L4event, absorb(state <span class="fu">year</span>) <span class="kw">cluster</span>(state)</span>
+<span id="cb5-58"><a href="difference-in-differences.html#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
+<span id="cb5-59"><a href="difference-in-differences.html#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
+<span id="cb5-60"><a href="difference-in-differences.html#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2(1)3 {</span>
+<span id="cb5-61"><a href="difference-in-differences.html#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
+<span id="cb5-62"><a href="difference-in-differences.html#cb5-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
+<span id="cb5-63"><a href="difference-in-differences.html#cb5-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-64"><a href="difference-in-differences.html#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 0(1)4 {</span>
+<span id="cb5-65"><a href="difference-in-differences.html#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
+<span id="cb5-66"><a href="difference-in-differences.html#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
+<span id="cb5-67"><a href="difference-in-differences.html#cb5-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-68"><a href="difference-in-differences.html#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> coef = 0 <span class="kw">if</span> F1event==1</span>
+<span id="cb5-69"><a href="difference-in-differences.html#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> se=0 <span class="kw">if</span> F1event==1</span>
+<span id="cb5-70"><a href="difference-in-differences.html#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="difference-in-differences.html#cb5-71" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
+<span id="cb5-72"><a href="difference-in-differences.html#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
+<span id="cb5-73"><a href="difference-in-differences.html#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
+<span id="cb5-74"><a href="difference-in-differences.html#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="difference-in-differences.html#cb5-75" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
+<span id="cb5-76"><a href="difference-in-differences.html#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> event_time&gt;=-3 &amp; event_time&lt;=4</span>
+<span id="cb5-77"><a href="difference-in-differences.html#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> event_time coef se ci_*</span>
+<span id="cb5-78"><a href="difference-in-differences.html#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
+<span id="cb5-79"><a href="difference-in-differences.html#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="difference-in-differences.html#cb5-80" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
+<span id="cb5-81"><a href="difference-in-differences.html#cb5-81" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
+<span id="cb5-82"><a href="difference-in-differences.html#cb5-82" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
+<span id="cb5-83"><a href="difference-in-differences.html#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="kw">sort</span> event_time</span>
+<span id="cb5-84"><a href="difference-in-differences.html#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef event_time, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom event_time) <span class="co">///</span></span>
+<span id="cb5-85"><a href="difference-in-differences.html#cb5-85" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(-3 4)), <span class="bn">xtitle</span>(<span class="st">"Time"</span>) <span class="co">///</span></span>
+<span id="cb5-86"><a href="difference-in-differences.html#cb5-86" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>) <span class="kw">xlabel</span>(-3(1)4)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">########################################</span>
+<span class="co">## Event Studies in R</span>
+<span class="co">########################################</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/modelsummary/">modelsummary</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lrberge.github.io/fixest/">fixest</a></span><span class="op">)</span>
+<span class="va">mcaid.data</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span><span class="op">)</span>
+
+<span class="co">## Common treatment timing</span>
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">mcaid.data</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">==</span><span class="fl">2014</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span>,
+         post <span class="op">=</span> <span class="op">(</span><span class="va">year</span><span class="op">&gt;=</span><span class="fl">2014</span><span class="op">)</span>, 
+         treat<span class="op">=</span><span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span><span class="op">)</span>
+
+<span class="va">mod.twfe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lrberge.github.io/fixest/reference/feols.html">feols</a></span><span class="op">(</span><span class="va">perc_unins</span><span class="op">~</span><span class="fu"><a href="https://lrberge.github.io/fixest/reference/i.html">i</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">expand_ever</span>, ref<span class="op">=</span><span class="fl">2013</span><span class="op">)</span> <span class="op">|</span> <span class="va">State</span> <span class="op">+</span> <span class="va">year</span>,
+                  cluster<span class="op">=</span><span class="op">~</span><span class="va">State</span>,
+                  data<span class="op">=</span><span class="va">reg.dat</span><span class="op">)</span>
+<span class="fu"><a href="https://lrberge.github.io/fixest/reference/coefplot.html">iplot</a></span><span class="op">(</span><span class="va">mod.twfe</span>, 
+      xlab <span class="op">=</span> <span class="st">'Time to treatment'</span>,
+      main <span class="op">=</span> <span class="st">'Event study'</span><span class="op">)</span>
+
+
+<span class="co">## Differential treatment timing</span>
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">mcaid.data</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span><span class="op">)</span>
+<span class="va">reg.dat</span><span class="op">[</span>, <span class="va">time_to_treat</span> <span class="op">:=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">==</span><span class="cn">TRUE</span>, <span class="va">year</span><span class="op">-</span><span class="va">expand_year</span>, <span class="fl">0</span><span class="op">)</span><span class="op">]</span>
+
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="va">reg.dat</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>time_to_treat<span class="op">=</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">time_to_treat</span><span class="op">&lt;=</span><span class="op">-</span><span class="fl">3</span>,<span class="op">-</span><span class="fl">3</span>,<span class="va">time_to_treat</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mod.twfe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lrberge.github.io/fixest/reference/feols.html">feols</a></span><span class="op">(</span><span class="va">perc_unins</span><span class="op">~</span><span class="fu"><a href="https://lrberge.github.io/fixest/reference/i.html">i</a></span><span class="op">(</span><span class="va">time_to_treat</span>, <span class="va">expand_ever</span>, ref<span class="op">=</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">|</span> <span class="va">State</span> <span class="op">+</span> <span class="va">year</span>,
+                  cluster<span class="op">=</span><span class="op">~</span><span class="va">State</span>,
+                  data<span class="op">=</span><span class="va">reg.dat</span><span class="op">)</span>
+<span class="fu"><a href="https://lrberge.github.io/fixest/reference/coefplot.html">iplot</a></span><span class="op">(</span><span class="va">mod.twfe</span>, 
+      xlab <span class="op">=</span> <span class="st">'Time to treatment'</span>,
+      main <span class="op">=</span> <span class="st">'Event study'</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="recent-dd-advancements" class="section level3" number="4.4.4">
+<h3>
+<span class="header-section-number">4.4.4</span> Recent DD Advancements<a class="anchor" aria-label="anchor" href="#recent-dd-advancements"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="difference-in-differences.html#cb7-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb7-2"><a href="difference-in-differences.html#cb7-2" aria-hidden="true" tabindex="-1"></a>** Recent DD Estimators <span class="kw">in</span> Stata</span>
+<span id="cb7-3"><a href="difference-in-differences.html#cb7-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb7-4"><a href="difference-in-differences.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install event_plot</span>
+<span id="cb7-5"><a href="difference-in-differences.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="difference-in-differences.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="difference-in-differences.html#cb7-7" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
+<span id="cb7-8"><a href="difference-in-differences.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
+<span id="cb7-9"><a href="difference-in-differences.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
+<span id="cb7-10"><a href="difference-in-differences.html#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="difference-in-differences.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-12"><a href="difference-in-differences.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-13"><a href="difference-in-differences.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-14"><a href="difference-in-differences.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-15"><a href="difference-in-differences.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-16"><a href="difference-in-differences.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-17"><a href="difference-in-differences.html#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="difference-in-differences.html#cb7-18" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
+<span id="cb7-19"><a href="difference-in-differences.html#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
+<span id="cb7-20"><a href="difference-in-differences.html#cb7-20" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
+<span id="cb7-21"><a href="difference-in-differences.html#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="difference-in-differences.html#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="difference-in-differences.html#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="difference-in-differences.html#cb7-24" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
+<span id="cb7-25"><a href="difference-in-differences.html#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
+<span id="cb7-26"><a href="difference-in-differences.html#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
+<span id="cb7-27"><a href="difference-in-differences.html#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="difference-in-differences.html#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-29"><a href="difference-in-differences.html#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-30"><a href="difference-in-differences.html#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-31"><a href="difference-in-differences.html#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-32"><a href="difference-in-differences.html#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-33"><a href="difference-in-differences.html#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-34"><a href="difference-in-differences.html#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="difference-in-differences.html#cb7-35" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
+<span id="cb7-36"><a href="difference-in-differences.html#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
+<span id="cb7-37"><a href="difference-in-differences.html#cb7-37" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
+<span id="cb7-38"><a href="difference-in-differences.html#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="difference-in-differences.html#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="difference-in-differences.html#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="difference-in-differences.html#cb7-41" aria-hidden="true" tabindex="-1"></a>** Sun and Abraham</span>
+<span id="cb7-42"><a href="difference-in-differences.html#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install eventstudyinteract</span>
+<span id="cb7-43"><a href="difference-in-differences.html#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install avar</span>
+<span id="cb7-44"><a href="difference-in-differences.html#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="difference-in-differences.html#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-46"><a href="difference-in-differences.html#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-47"><a href="difference-in-differences.html#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-48"><a href="difference-in-differences.html#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-49"><a href="difference-in-differences.html#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-50"><a href="difference-in-differences.html#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-51"><a href="difference-in-differences.html#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb7-52"><a href="difference-in-differences.html#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
+<span id="cb7-53"><a href="difference-in-differences.html#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="difference-in-differences.html#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
+<span id="cb7-55"><a href="difference-in-differences.html#cb7-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
+<span id="cb7-56"><a href="difference-in-differences.html#cb7-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-57"><a href="difference-in-differences.html#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
+<span id="cb7-58"><a href="difference-in-differences.html#cb7-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
+<span id="cb7-59"><a href="difference-in-differences.html#cb7-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-60"><a href="difference-in-differences.html#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
+<span id="cb7-61"><a href="difference-in-differences.html#cb7-61" aria-hidden="true" tabindex="-1"></a>eventstudyinteract perc_unins F3event F2event L0event L1event L2event L3event L4event, <span class="kw">vce</span>(<span class="kw">cluster</span> stategroup) absorb(stategroup <span class="fu">year</span>) cohort(expand_year) control_cohort(nevertreated)</span>
+<span id="cb7-62"><a href="difference-in-differences.html#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="difference-in-differences.html#cb7-63" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(b_iw)#e(V_iw), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-3(1)4) <span class="bn">title</span>(<span class="st">"Sun and Abraham (2020)"</span>)) stub_lag(L#event) stub_lead(F#event) plottype(<span class="kw">scatter</span>) ciplottype(rcap) together</span>
+<span id="cb7-64"><a href="difference-in-differences.html#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="difference-in-differences.html#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="difference-in-differences.html#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="difference-in-differences.html#cb7-67" aria-hidden="true" tabindex="-1"></a>** <span class="kw">de</span> Chaisemartin and D'Haultfoeuille</span>
+<span id="cb7-68"><a href="difference-in-differences.html#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install did_multiplegt</span>
+<span id="cb7-69"><a href="difference-in-differences.html#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-70"><a href="difference-in-differences.html#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-71"><a href="difference-in-differences.html#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-72"><a href="difference-in-differences.html#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-73"><a href="difference-in-differences.html#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-74"><a href="difference-in-differences.html#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-75"><a href="difference-in-differences.html#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-76"><a href="difference-in-differences.html#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb7-77"><a href="difference-in-differences.html#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
+<span id="cb7-78"><a href="difference-in-differences.html#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(event_time&gt;=0 &amp; event_time!=.)</span>
+<span id="cb7-79"><a href="difference-in-differences.html#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="difference-in-differences.html#cb7-80" aria-hidden="true" tabindex="-1"></a>did_multiplegt perc_unins stategroup <span class="fu">year</span> treat, robust_dynamic dynamic(4) placebo(3) breps(100) <span class="kw">cluster</span>(stategroup) </span>
+<span id="cb7-81"><a href="difference-in-differences.html#cb7-81" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(<span class="kw">estimates</span>)#e(variances), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="co">///</span></span>
+<span id="cb7-82"><a href="difference-in-differences.html#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="bn">title</span>(<span class="st">"de Chaisemartin and D'Haultfoeuille (2020)"</span>) <span class="kw">xlabel</span>(-3(1)4)) stub_lag(Effect_#) stub_lead(Placebo_#) together</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">########################################</span>
+<span class="co">## Recent DD Estimators in R</span>
+<span class="co">########################################</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/modelsummary/">modelsummary</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lrberge.github.io/fixest/">fixest</a></span><span class="op">)</span>
+<span class="va">mcaid.data</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span><span class="op">)</span>
+
+
+<span class="co">## Callaway and Sant'Anna</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bcallaway11.github.io/did/">did</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pedrohcgs.github.io/DRDID/">DRDID</a></span><span class="op">)</span>
+
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="va">mcaid.data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span>,
+         post <span class="op">=</span> <span class="op">(</span><span class="va">year</span><span class="op">&gt;=</span><span class="fl">2014</span><span class="op">)</span>, 
+         treat<span class="op">=</span><span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span>,
+         expand_year<span class="op">=</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_year</span><span class="op">)</span>,<span class="fl">0</span>,<span class="va">expand_year</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">perc_unins</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">State</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>stategroup<span class="op">=</span><span class="fu">cur_group_id</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">mod.cs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://bcallaway11.github.io/did/reference/att_gt.html">att_gt</a></span><span class="op">(</span>yname<span class="op">=</span><span class="st">"perc_unins"</span>, tname<span class="op">=</span><span class="st">"year"</span>, idname<span class="op">=</span><span class="st">"stategroup"</span>,
+                 gname<span class="op">=</span><span class="st">"expand_year"</span>,
+                 data<span class="op">=</span><span class="va">reg.dat</span>, panel<span class="op">=</span><span class="cn">TRUE</span>, est_method<span class="op">=</span><span class="st">"dr"</span>,
+                 allow_unbalanced_panel<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">mod.cs.event</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://bcallaway11.github.io/did/reference/aggte.html">aggte</a></span><span class="op">(</span><span class="va">mod.cs</span>, type<span class="op">=</span><span class="st">"dynamic"</span><span class="op">)</span>
+<span class="fu"><a href="https://bcallaway11.github.io/did/reference/ggdid.html">ggdid</a></span><span class="op">(</span><span class="va">mod.cs.event</span><span class="op">)</span>
+
+
+<span class="co">## Sun and Abraham</span>
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="va">mcaid.data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span>,
+         post <span class="op">=</span> <span class="op">(</span><span class="va">year</span><span class="op">&gt;=</span><span class="fl">2014</span><span class="op">)</span>, 
+         treat<span class="op">=</span><span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span>,
+         expand_year <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="fl">10000</span>, <span class="va">expand_year</span><span class="op">)</span>,
+         time_to_treat <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">-</span><span class="fl">1</span>, <span class="va">year</span><span class="op">-</span><span class="va">expand_year</span><span class="op">)</span>,
+         time_to_treat <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">time_to_treat</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">3</span>, <span class="va">time_to_treat</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mod.sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lrberge.github.io/fixest/reference/feols.html">feols</a></span><span class="op">(</span><span class="va">perc_unins</span><span class="op">~</span><span class="fu"><a href="https://lrberge.github.io/fixest/reference/sunab.html">sunab</a></span><span class="op">(</span><span class="va">expand_year</span>, <span class="va">time_to_treat</span><span class="op">)</span> <span class="op">|</span> <span class="va">State</span> <span class="op">+</span> <span class="va">year</span>,
+                cluster<span class="op">=</span><span class="op">~</span><span class="va">State</span>,
+                data<span class="op">=</span><span class="va">reg.dat</span><span class="op">)</span>
+<span class="fu"><a href="https://lrberge.github.io/fixest/reference/coefplot.html">iplot</a></span><span class="op">(</span><span class="va">mod.sa</span>,
+      xlab <span class="op">=</span> <span class="st">'Time to treatment'</span>,
+      main <span class="op">=</span> <span class="st">'Event study'</span><span class="op">)</span>
+
+
+<span class="co">## de Chaisemartin and D'Haultfoeuille</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">DIDmultiplegt</span><span class="op">)</span>
+<span class="va">reg.dat</span> <span class="op">&lt;-</span> <span class="va">mcaid.data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">expand_ever</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>perc_unins<span class="op">=</span><span class="va">uninsured</span><span class="op">/</span><span class="va">adult_pop</span>,
+         treat<span class="op">=</span><span class="fu">case_when</span><span class="op">(</span>
+           <span class="va">expand_ever</span><span class="op">==</span><span class="cn">FALSE</span> <span class="op">~</span> <span class="fl">0</span>,
+           <span class="va">expand_ever</span><span class="op">==</span><span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="va">expand_year</span><span class="op">&lt;</span><span class="va">year</span> <span class="op">~</span> <span class="fl">0</span>,
+           <span class="va">expand_ever</span><span class="op">==</span><span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="va">expand_year</span><span class="op">&gt;=</span><span class="va">year</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mod.ch</span> <span class="op">&lt;-</span> <span class="fu">did_multiplegt</span><span class="op">(</span>df<span class="op">=</span><span class="va">reg.dat</span>, Y<span class="op">=</span><span class="st">"perc_unins"</span>, G<span class="op">=</span><span class="st">"State"</span>, T<span class="op">=</span><span class="st">"year"</span>, D<span class="op">=</span><span class="st">"treat"</span>,
+                         placebo<span class="op">=</span><span class="fl">3</span>, dynamic<span class="op">=</span><span class="fl">4</span>, brep<span class="op">=</span><span class="fl">50</span>, cluster<span class="op">=</span><span class="st">"State"</span><span class="op">)</span>
+<span class="va">mod.ch</span></code></pre></div>
+
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-altonji2005" class="csl-entry">
 Altonji, Joseph G, Todd E Elder, and Christopher R Taber. 2005. <span>“An Evaluation of Instrumental Variable Strategies for Estimating the Effects of Catholic Schooling.”</span> <em>Journal of Human Resources</em> 40 (4): 791–821.
@@ -189,6 +519,7 @@ Wu, De-Min. 1973. <span>“Alternative Tests of Independence Between Stochastic 
 </div>
 </div>
 </div>
+</div>
   <div class="chapter-nav">
 <div class="prev"><a href="instrumental-variables.html"><span class="header-section-number">3</span> Instrumental Variables</a></div>
 <div class="empty"></div>
@@ -201,11 +532,12 @@ Wu, De-Min. 1973. <span>“Alternative Tests of Independence Between Stochastic 
 <li><a class="nav-link" href="#presentations"><span class="header-section-number">4.3</span> Presentations</a></li>
 <li>
 <a class="nav-link" href="#code-files"><span class="header-section-number">4.4</span> Code Files</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#stata"><span class="header-section-number">4.4.1</span> Stata</a></li>
-<li><a class="nav-link" href="#r"><span class="header-section-number">4.4.2</span> R</a></li>
+<li><a class="nav-link" href="#intro-to-panel-data"><span class="header-section-number">4.4.1</span> Intro to Panel Data</a></li>
+<li><a class="nav-link" href="#basics-of-dd"><span class="header-section-number">4.4.2</span> Basics of DD</a></li>
+<li><a class="nav-link" href="#twfe-and-event-studies"><span class="header-section-number">4.4.3</span> TWFE and Event Studies</a></li>
+<li><a class="nav-link" href="#recent-dd-advancements"><span class="header-section-number">4.4.4</span> Recent DD Advancements</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#other-stuff"><span class="header-section-number">4.5</span> Other stuff</a></li>
 </ul>
 
       <div class="book-extra">
