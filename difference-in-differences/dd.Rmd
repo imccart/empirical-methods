@@ -11,6 +11,14 @@ Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and ov
 
 Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment *would have* evolved just as the outcomes for those that did not receive treatment (on average).
 
+## TWFE and Event Studies
+
+Two-way fixed effects (TWFE) is essentially just a shorthand for a specific and very common regression specification that includes fixed effects for units $i=1,...,N$ and time $t=1,...,T$. I'll denote these by $\gamma_{i}$ and $\gamma_{t}$, respectively. TWFE is more general than a 2x2 DD specification because it allows for intercept shifts for each units and for each time period, as opposed to shifts only among each treated/control group and treated/control period. However, this extra generality doesn't really do much in the case of a single treated group and a single treatment time, since the overall group and overall treatment period dummies in the 2x2 case are effectively an average of the individual unit and individual time period fixed effects, respectively.
+
+More formally, recall our original DD regression specification,<br>
+$y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Treat) + \delta \times 1(Post) \times 1(Treat) + \varepsilon$. Here, we have a single treated group and a single treatment time, so we capture treatment time with a post-period indicator, treated group with a treatment indicator, and the interaction between the two variables is our treatment effect of interest. But we can generalize this to allow for dummies for each unit (rather than treated/control group) and similarly for each time period (rather than pre/post groups). This doesn't change our treatment effect estimates, but it is "more efficient" (standard errors are going to be smaller). Doing so yields the following regression specification: $$y_{it} = \alpha + \delta D_{it} + \gamma_{i} + \gamma_{t} + \varepsilon,$$<br>
+where $\gamma_{i}$ and $\gamma_{t}$ denote a set of unit $i$ and time period $t$ dummy variables (or fixed effects), and where $\delta$ captures our treatment effect of interest just as before.
+
 
 ## Presentations
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 

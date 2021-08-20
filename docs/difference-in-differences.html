@@ -67,9 +67,17 @@
 </h2>
 <p>Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment <em>would have</em> evolved just as the outcomes for those that did not receive treatment (on average).</p>
 </div>
-<div id="presentations" class="section level2" number="4.3">
+<div id="twfe-and-event-studies" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">4.3</span> Presentations<a class="anchor" aria-label="anchor" href="#presentations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> TWFE and Event Studies<a class="anchor" aria-label="anchor" href="#twfe-and-event-studies"><i class="fas fa-link"></i></a>
+</h2>
+<p>Two-way fixed effects (TWFE) is essentially just a shorthand for a specific and very common regression specification that includes fixed effects for units <span class="math inline">\(i=1,...,N\)</span> and time <span class="math inline">\(t=1,...,T\)</span>. I’ll denote these by <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inline">\(\gamma_{t}\)</span>, respectively. TWFE is more general than a 2x2 DD specification because it allows for intercept shifts for each units and for each time period, as opposed to shifts only among each treated/control group and treated/control period. However, this extra generality doesn’t really do much in the case of a single treated group and a single treatment time, since the overall group and overall treatment period dummies in the 2x2 case are effectively an average of the individual unit and individual time period fixed effects, respectively.</p>
+<p>More formally, recall our original DD regression specification,<br><span class="math inline">\(y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Treat) + \delta \times 1(Post) \times 1(Treat) + \varepsilon\)</span>. Here, we have a single treated group and a single treatment time, so we capture treatment time with a post-period indicator, treated group with a treatment indicator, and the interaction between the two variables is our treatment effect of interest. But we can generalize this to allow for dummies for each unit (rather than treated/control group) and similarly for each time period (rather than pre/post groups). This doesn’t change our treatment effect estimates, but it is “more efficient” (standard errors are going to be smaller). Doing so yields the following regression specification: <span class="math display">\[y_{it} = \alpha + \delta D_{it} + \gamma_{i} + \gamma_{t} + \varepsilon,\]</span><br>
+where <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inline">\(\gamma_{t}\)</span> denote a set of unit <span class="math inline">\(i\)</span> and time period <span class="math inline">\(t\)</span> dummy variables (or fixed effects), and where <span class="math inline">\(\delta\)</span> captures our treatment effect of interest just as before.</p>
+</div>
+<div id="presentations" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Presentations<a class="anchor" aria-label="anchor" href="#presentations"><i class="fas fa-link"></i></a>
 </h2>
 <p>Below are some presentations I’ve made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words).</p>
 <ul>
@@ -85,14 +93,14 @@
 <a href="https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html">Recent Panel Advancements</a>, <strong>CDC Workshop</strong>, August 2021</li>
 </ul>
 </div>
-<div id="code-files" class="section level2" number="4.4">
+<div id="code-files" class="section level2" number="4.5">
 <h2>
-<span class="header-section-number">4.4</span> Code Files<a class="anchor" aria-label="anchor" href="#code-files"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5</span> Code Files<a class="anchor" aria-label="anchor" href="#code-files"><i class="fas fa-link"></i></a>
 </h2>
 <p>What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.</p>
-<div id="intro-to-panel-data" class="section level3" number="4.4.1">
+<div id="intro-to-panel-data" class="section level3" number="4.5.1">
 <h3>
-<span class="header-section-number">4.4.1</span> Intro to Panel Data<a class="anchor" aria-label="anchor" href="#intro-to-panel-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.1</span> Intro to Panel Data<a class="anchor" aria-label="anchor" href="#intro-to-panel-data"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="difference-in-differences.html#cb1-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
 <span id="cb1-2"><a href="difference-in-differences.html#cb1-2" aria-hidden="true" tabindex="-1"></a>** Panel <span class="kw">data</span> <span class="kw">estimates</span> <span class="kw">in</span> Stata</span>
@@ -141,15 +149,15 @@
 <span class="va">wagepan</span> <span class="op">&lt;-</span> <span class="va">wagepan</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">nr</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>fd_lwage<span class="op">=</span><span class="va">lwage</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">lwage</span><span class="op">)</span>,
-         fd_exper<span class="op">=</span><span class="va">exper</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">exper</span><span class="op">)</span>,
-         fd_expersq<span class="op">=</span><span class="va">expersq</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">expersq</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">mutate</span><span class="op">(</span>fd_lwage<span class="op">=</span><span class="va">lwage</span> <span class="op">-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag</a></span><span class="op">(</span><span class="va">lwage</span><span class="op">)</span>,
+         fd_exper<span class="op">=</span><span class="va">exper</span> <span class="op">-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag</a></span><span class="op">(</span><span class="va">exper</span><span class="op">)</span>,
+         fd_expersq<span class="op">=</span><span class="va">expersq</span> <span class="op">-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag</a></span><span class="op">(</span><span class="va">expersq</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/na.omit.data.table.html">na.omit</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fd_lwage</span><span class="op">~</span><span class="fl">0</span> <span class="op">+</span> <span class="va">fd_exper</span> <span class="op">+</span> <span class="va">fd_expersq</span>, data<span class="op">=</span><span class="va">wagepan</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="basics-of-dd" class="section level3" number="4.4.2">
+<div id="basics-of-dd" class="section level3" number="4.5.2">
 <h3>
-<span class="header-section-number">4.4.2</span> Basics of DD<a class="anchor" aria-label="anchor" href="#basics-of-dd"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.2</span> Basics of DD<a class="anchor" aria-label="anchor" href="#basics-of-dd"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="difference-in-differences.html#cb3-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
 <span id="cb3-2"><a href="difference-in-differences.html#cb3-2" aria-hidden="true" tabindex="-1"></a>** Differences-<span class="kw">in</span>-Differences <span class="kw">in</span> Stata</span>
@@ -210,11 +218,11 @@
          treat<span class="op">=</span><span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span><span class="op">)</span>
 
 <span class="va">dd.ins.reg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">perc_unins</span> <span class="op">~</span> <span class="va">post</span> <span class="op">+</span> <span class="va">expand_ever</span> <span class="op">+</span> <span class="va">post</span><span class="op">*</span><span class="va">expand_ever</span>, data<span class="op">=</span><span class="va">reg.dat</span><span class="op">)</span>
-<span class="fu">msummary</span><span class="op">(</span><span class="va">dd.ins.reg</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/msummary.html">msummary</a></span><span class="op">(</span><span class="va">dd.ins.reg</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="twfe-and-event-studies" class="section level3" number="4.4.3">
+<div id="twfe-and-event-studies-1" class="section level3" number="4.5.3">
 <h3>
-<span class="header-section-number">4.4.3</span> TWFE and Event Studies<a class="anchor" aria-label="anchor" href="#twfe-and-event-studies"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.3</span> TWFE and Event Studies<a class="anchor" aria-label="anchor" href="#twfe-and-event-studies-1"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="difference-in-differences.html#cb5-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
 <span id="cb5-2"><a href="difference-in-differences.html#cb5-2" aria-hidden="true" tabindex="-1"></a>** Event Studies <span class="kw">in</span> Stata</span>
@@ -343,9 +351,9 @@
       xlab <span class="op">=</span> <span class="st">'Time to treatment'</span>,
       main <span class="op">=</span> <span class="st">'Event study'</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="recent-dd-advancements" class="section level3" number="4.4.4">
+<div id="recent-dd-advancements" class="section level3" number="4.5.4">
 <h3>
-<span class="header-section-number">4.4.4</span> Recent DD Advancements<a class="anchor" aria-label="anchor" href="#recent-dd-advancements"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4</span> Recent DD Advancements<a class="anchor" aria-label="anchor" href="#recent-dd-advancements"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="difference-in-differences.html#cb7-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
 <span id="cb7-2"><a href="difference-in-differences.html#cb7-2" aria-hidden="true" tabindex="-1"></a>** Recent DD Estimators <span class="kw">in</span> Stata</span>
@@ -529,13 +537,14 @@ Wu, De-Min. 1973. <span>“Alternative Tests of Independence Between Stochastic 
 <li><a class="nav-link" href="#difference-in-differences"><span class="header-section-number">4</span> Difference-in-Differences</a></li>
 <li><a class="nav-link" href="#what-is-panel-data"><span class="header-section-number">4.1</span> What is Panel Data?</a></li>
 <li><a class="nav-link" href="#what-is-difference-in-differences"><span class="header-section-number">4.2</span> What is Difference-in-Differences?</a></li>
-<li><a class="nav-link" href="#presentations"><span class="header-section-number">4.3</span> Presentations</a></li>
+<li><a class="nav-link" href="#twfe-and-event-studies"><span class="header-section-number">4.3</span> TWFE and Event Studies</a></li>
+<li><a class="nav-link" href="#presentations"><span class="header-section-number">4.4</span> Presentations</a></li>
 <li>
-<a class="nav-link" href="#code-files"><span class="header-section-number">4.4</span> Code Files</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#intro-to-panel-data"><span class="header-section-number">4.4.1</span> Intro to Panel Data</a></li>
-<li><a class="nav-link" href="#basics-of-dd"><span class="header-section-number">4.4.2</span> Basics of DD</a></li>
-<li><a class="nav-link" href="#twfe-and-event-studies"><span class="header-section-number">4.4.3</span> TWFE and Event Studies</a></li>
-<li><a class="nav-link" href="#recent-dd-advancements"><span class="header-section-number">4.4.4</span> Recent DD Advancements</a></li>
+<a class="nav-link" href="#code-files"><span class="header-section-number">4.5</span> Code Files</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#intro-to-panel-data"><span class="header-section-number">4.5.1</span> Intro to Panel Data</a></li>
+<li><a class="nav-link" href="#basics-of-dd"><span class="header-section-number">4.5.2</span> Basics of DD</a></li>
+<li><a class="nav-link" href="#twfe-and-event-studies-1"><span class="header-section-number">4.5.3</span> TWFE and Event Studies</a></li>
+<li><a class="nav-link" href="#recent-dd-advancements"><span class="header-section-number">4.5.4</span> Recent DD Advancements</a></li>
 </ul>
 </li>
 </ul>

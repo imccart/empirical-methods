@@ -9,9 +9,10 @@ references-1
 difference-in-differences
 what-is-panel-data
 what-is-difference-in-differences
+twfe-and-event-studies
 presentations
 code-files
 intro-to-panel-data
 basics-of-dd
-twfe-and-event-studies
+twfe-and-event-studies-1
 recent-dd-advancements
