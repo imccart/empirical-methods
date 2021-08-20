@@ -80,3 +80,6 @@ What good is a discussion of data and econometrics without some practice?! Here 
 
 ```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-newdd.R')}
 ```
+
+
+## References
