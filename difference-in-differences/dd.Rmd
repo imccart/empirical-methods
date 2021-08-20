@@ -1,5 +1,16 @@
 # Difference-in-Differences
 
+```{css, echo=FALSE}
+pre {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 200px;
+}
+```
+
 ## What is Panel Data?
 
 Panel data describes the setting in which we have repeated observations over time for the same units (e.g., people, firms, counties, etc.). Such data often present an opportunity to estimate causal effects more convincingly than in a purely cross-sectional setting, although that's certainly not always the case. I'd much rather read a strong analysis of "lesser" data than a poor analysis of "better" data. But all else equal, panel data tend to contain more information and more dimensions of variation than we see in cross-sectional data, and thus more opportunities for causal inference.
