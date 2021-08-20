@@ -11,3 +11,6 @@ what-is-panel-data
 what-is-difference-in-differences
 presentations
 code-files
+stata
+r
+other-stuff

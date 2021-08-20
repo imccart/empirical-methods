@@ -85,11 +85,79 @@
 <a href="https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html">Recent Panel Advancements</a>, <strong>CDC Workshop</strong>, August 2021</li>
 </ul>
 </div>
-<div id="code-files" class="section level2" number="4.4">
+<div id="code-files" class="section level2 tabset" number="4.4">
 <h2>
 <span class="header-section-number">4.4</span> Code Files<a class="anchor" aria-label="anchor" href="#code-files"><i class="fas fa-link"></i></a>
 </h2>
 <p>What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.</p>
+<p><strong>Basics of Panel Data</strong></p>
+<div id="stata" class="section level3" number="4.4.1">
+<h3>
+<span class="header-section-number">4.4.1</span> Stata<a class="anchor" aria-label="anchor" href="#stata"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="difference-in-differences.html#cb1-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb1-2"><a href="difference-in-differences.html#cb1-2" aria-hidden="true" tabindex="-1"></a>** Panel <span class="kw">data</span> <span class="kw">estimates</span> <span class="kw">in</span> Stata</span>
+<span id="cb1-3"><a href="difference-in-differences.html#cb1-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb1-4"><a href="difference-in-differences.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="difference-in-differences.html#cb1-5" aria-hidden="true" tabindex="-1"></a>** FE (within) estimator</span>
+<span id="cb1-6"><a href="difference-in-differences.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install bcuse</span>
+<span id="cb1-7"><a href="difference-in-differences.html#cb1-7" aria-hidden="true" tabindex="-1"></a>bcuse wagepan</span>
+<span id="cb1-8"><a href="difference-in-differences.html#cb1-8" aria-hidden="true" tabindex="-1"></a>xtset <span class="kw">nr</span> <span class="fu">year</span></span>
+<span id="cb1-9"><a href="difference-in-differences.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> lwage exper expersq, <span class="kw">fe</span></span>
+<span id="cb1-10"><a href="difference-in-differences.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="difference-in-differences.html#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="difference-in-differences.html#cb1-12" aria-hidden="true" tabindex="-1"></a>** Manually demeaning the <span class="kw">data</span></span>
+<span id="cb1-13"><a href="difference-in-differences.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> x <span class="kw">of</span> <span class="kw">varlist</span> lwage exper expersq {</span>
+<span id="cb1-14"><a href="difference-in-differences.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> mean_<span class="ot">`x'</span>=<span class="kw">mean</span>(<span class="ot">`x'</span>)</span>
+<span id="cb1-15"><a href="difference-in-differences.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> demean_<span class="ot">`x'</span>=<span class="ot">`x'</span>-mean_<span class="ot">`x'</span></span>
+<span id="cb1-16"><a href="difference-in-differences.html#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="difference-in-differences.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> demean_lwage demean_exper demean_expersq</span>
+<span id="cb1-18"><a href="difference-in-differences.html#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="difference-in-differences.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="difference-in-differences.html#cb1-20" aria-hidden="true" tabindex="-1"></a>** First differencing</span>
+<span id="cb1-21"><a href="difference-in-differences.html#cb1-21" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span>: the <span class="st">"d."</span> <span class="kw">operator</span> only works with identical time gaps (1 <span class="kw">in</span> <span class="kw">this</span> <span class="kw">case</span>)</span>
+<span id="cb1-22"><a href="difference-in-differences.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> <span class="kw">d</span>.lwage <span class="kw">d</span>.exper <span class="kw">d</span>.expersq, <span class="kw">noconstant</span></span></code></pre></div>
+</div>
+<div id="r" class="section level3" number="4.4.2">
+<h3>
+<span class="header-section-number">4.4.2</span> R<a class="anchor" aria-label="anchor" href="#r"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">########################################</span>
+<span class="co">## Panel data estimates in R</span>
+<span class="co">########################################</span>
+  
+<span class="co">## FE (within) estimator</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sjewo/readstata13">readstata13</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lrberge.github.io/fixest/">fixest</a></span><span class="op">)</span>
+<span class="va">wagepan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readstata13/man/read.dta13.html">read.dta13</a></span><span class="op">(</span><span class="st">"http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta"</span><span class="op">)</span>
+<span class="fu"><a href="https://lrberge.github.io/fixest/reference/feols.html">feols</a></span><span class="op">(</span><span class="va">lwage</span><span class="op">~</span><span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">|</span> <span class="va">nr</span>, data<span class="op">=</span><span class="va">wagepan</span><span class="op">)</span>
+
+
+<span class="co">## Manually demeaning the data</span>
+<span class="va">wagepan</span> <span class="op">&lt;-</span> <span class="va">wagepan</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">nr</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>demean_lwage<span class="op">=</span><span class="va">lwage</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">lwage</span><span class="op">)</span>,
+         demean_exper<span class="op">=</span><span class="va">exper</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">exper</span><span class="op">)</span>,
+         demean_expersq<span class="op">=</span><span class="va">expersq</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">expersq</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">demean_lwage</span><span class="op">~</span><span class="va">demean_exper</span> <span class="op">+</span> <span class="va">demean_expersq</span>, data<span class="op">=</span><span class="va">wagepan</span><span class="op">)</span><span class="op">)</span>
+
+
+<span class="co">## First differencing</span>
+<span class="va">wagepan</span> <span class="op">&lt;-</span> <span class="va">wagepan</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">nr</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>fd_lwage<span class="op">=</span><span class="va">lwage</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">lwage</span><span class="op">)</span>,
+         fd_exper<span class="op">=</span><span class="va">exper</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">exper</span><span class="op">)</span>,
+         fd_expersq<span class="op">=</span><span class="va">expersq</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">expersq</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fd_lwage</span><span class="op">~</span><span class="fl">0</span> <span class="op">+</span> <span class="va">fd_exper</span> <span class="op">+</span> <span class="va">fd_expersq</span>, data<span class="op">=</span><span class="va">wagepan</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="other-stuff" class="section level2" number="4.5">
+<h2>
+<span class="header-section-number">4.5</span> Other stuff<a class="anchor" aria-label="anchor" href="#other-stuff"><i class="fas fa-link"></i></a>
+</h2>
 <ul>
 <li><p><a href="code/Stata-panel.do">Stata Code</a></p></li>
 <li><p><a href="code/R-panel.R">R Code</a></p></li>
@@ -131,7 +199,13 @@ Wu, De-Min. 1973. <span>“Alternative Tests of Independence Between Stochastic 
 <li><a class="nav-link" href="#what-is-panel-data"><span class="header-section-number">4.1</span> What is Panel Data?</a></li>
 <li><a class="nav-link" href="#what-is-difference-in-differences"><span class="header-section-number">4.2</span> What is Difference-in-Differences?</a></li>
 <li><a class="nav-link" href="#presentations"><span class="header-section-number">4.3</span> Presentations</a></li>
-<li><a class="nav-link" href="#code-files"><span class="header-section-number">4.4</span> Code Files</a></li>
+<li>
+<a class="nav-link" href="#code-files"><span class="header-section-number">4.4</span> Code Files</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#stata"><span class="header-section-number">4.4.1</span> Stata</a></li>
+<li><a class="nav-link" href="#r"><span class="header-section-number">4.4.2</span> R</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#other-stuff"><span class="header-section-number">4.5</span> Other stuff</a></li>
 </ul>
 
       <div class="book-extra">

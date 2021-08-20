@@ -12,8 +12,6 @@ Slightly more formally, we observe some outcome $y$ for units $i=1,...,N$ and ov
 Difference-in-differences (DD) is an identification strategy that essentially attempts to predict the counterfactual for the treated group using the change in outcomes among the control group. Intuitively, we assume that the outcomes for those that ultimately received treatment *would have* evolved just as the outcomes for those that did not receive treatment (on average).
 
 
-
-
 ## Presentations {.tabset}
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
 
@@ -24,9 +22,23 @@ Below are some presentations I've made in different settings. These more or less
 - [Recent Panel Advancements](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html), **CDC Workshop**, August 2021
 
 
-## Code Files
+## Code Files {.tabset}
 What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.
 
+**Basics of Panel Data**
+
+### Stata
+
+```{stata eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/Stata-panel.do')}
+```
+
+### R
+```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-panel.R')}
+```
+
+
+
+## Other stuff
 
 - [Stata Code](code/Stata-panel.do)
 - [R Code](code/R-panel.R)
