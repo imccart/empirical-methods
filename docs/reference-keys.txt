@@ -6,7 +6,6 @@ references
 instrumental-variables
 does-iv-do-anything
 iv-flowchart
-references-1
 difference-in-differences
 what-is-panel-data
 what-is-difference-in-differences
@@ -17,4 +16,4 @@ intro-to-panel-data
 basics-of-dd
 twfe-and-event-studies-1
 recent-dd-advancements
-references-2
+references-1

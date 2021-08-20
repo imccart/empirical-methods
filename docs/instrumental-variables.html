@@ -91,17 +91,17 @@
 </center>
 <p>The point is that empirical work in practice is messy. Ideally, we could set out our plan in advance and proceed accordingly, but there are some things we just can’t know until we see the data. All we can do is work through the process in good faith, assessing the quality of our empirical work based on sound statistics and econometrics.</p>
 <p>One final note. If you’re accessing this on an android mobile device, the flowcharts are going to look a little odd (probably huge). This is a known issue in rendering these types of diagrams. See this closed <a href="https://github.com/mermaid-js/mermaid/issues/816">issue on GitHub</a> and these unanswered <a href="https://stackoverflow.com/search?q=%5Bmermaid%5D+chrome">posts on StackOverflow</a>. If anyone has any suggestions for how to have this render on an android mobile browser, please let me know. Otherwise, happy instrumenting!</p>
-<div id="htmlwidget-1fd15d57c081e804d440" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1fd15d57c081e804d440">{"x":{"diagram":"\ngraph TD\n    A[Thinking of IV?] --> B[Does it really matter?]\n    B --> C1[Are your instruments<br> any good?]\n"},"evals":[],"jsHooks":[]}</script>
+<center>
+<div id="htmlwidget-eb53402a6d556d5ef010" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-eb53402a6d556d5ef010">{"x":{"diagram":"\ngraph TD\n    A[Thinking of IV?] --> B[Does it really matter?]\n    B --> |yes!| C1[Are your instruments<br> any good?]\n    B --> |I guess not| C2([Nevermind:<br> try something else])\n    click B \"/iv/problem\" \"Pre-testing\"\n"},"evals":[],"jsHooks":[]}</script>
+</center>
 </div>
-<div id="references-1" class="section level2" number="3.3">
-<h2>
-<span class="header-section-number">3.3</span> References<a class="anchor" aria-label="anchor" href="#references-1"><i class="fas fa-link"></i></a>
-</h2>
+  
+
+  
 
 </div>
-</div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="endogeneity.html"><span class="header-section-number">2</span> Endogeneity</a></div>
 <div class="next"><a href="difference-in-differences.html"><span class="header-section-number">4</span> Difference-in-Differences</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
@@ -110,7 +110,6 @@
 <li><a class="nav-link" href="#instrumental-variables"><span class="header-section-number">3</span> Instrumental Variables</a></li>
 <li><a class="nav-link" href="#does-iv-do-anything"><span class="header-section-number">3.1</span> Does IV do anything?</a></li>
 <li><a class="nav-link" href="#iv-flowchart"><span class="header-section-number">3.2</span> IV Flowchart</a></li>
-<li><a class="nav-link" href="#references-1"><span class="header-section-number">3.3</span> References</a></li>
 </ul>
 
       <div class="book-extra">
@@ -119,8 +118,6 @@
         </ul>
 </div>
     </nav>
-</div>
-
 </div>
 </div> <!-- .container -->
 
@@ -164,5 +161,6 @@ for (let popover of popovers) {
   }
 }
 </script>
+</div>
 </body>
 </html>
