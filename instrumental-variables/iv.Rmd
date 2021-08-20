@@ -42,20 +42,8 @@ One final note. If you're accessing this on an android mobile device, the flowch
 library(DiagrammeR)
 mermaid('
 graph TD
-    A(["Thinking of IV?"]) --> B(["Does it really matter?"])
-    B --> |"yes!"| C1(["Are your instruments<br> any good?"])
-    B --> |"I guess not"| C2(["Nevermind:<br> try something else"])
-    click B "/iv/problem" "Pre-testing"
-    click C1 "/iv/step1_overall" "Stage 1"
-    click D1 "/iv/step1_firststage" "Testing the first stage"
-    click D2 "/iv/step1_exog" "Testing the exogeneity assumption"
-    click D3 "/iv/step1_exclude" "Testing the exclusion assumption"
-    click E "/iv/step1_assess" "Assessing your instrument tests"
-    click e1 "/iv/step1b_overall" "IVs are OK, but not great"
-    click f1 "/iv/step1b_firststage" "Weak IV Robust Inference"
-    click f2 "/iv/step1b_exog_excl" "Invalid IVs"
-    click C2 "/" "Try something else"
-    click I "https://davidcard.berkeley.edu/papers/card-dellavigna-pagelimits.pdf" "Page limits are non-binding."
+    A([Thinking of IV?]) --> B([Does it really matter?])
+    B --> |yes!| C1([Are your instruments<br> any good?])
 ')
 ```
 
