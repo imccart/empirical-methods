@@ -17,22 +17,8 @@ Difference-in-differences (DD) is an identification strategy that essentially at
 ## Presentations {.tabset}
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
 
-### Panel Intro
-
-```{r}
-knitr::include_url('https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/intro-cdc202108.html')
-```
-
-### DD
-
-```{r}
-knitr::include_url('https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/dd-cdc202108.html')
-```
-
-
-## Other stuff
 - [Intro to Panel Data](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/intro-cdc202108.html), **CDC Workshop**, August 2021
-- [Basics of DD](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/dd-cdc202108.html), **CDC Workshop**, August 2021
+- [Basics of DD](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/did-cdc202108.html), **CDC Workshop**, August 2021
 - [TWFE and Event Studies](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/twfe-cdc202108.html), **CDC Workshop**, August 2021
 - [Recent DD Advancements](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newdd-cdc202108.html), **CDC Workshop**, August 2021
 - [Recent Panel Advancements](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html), **CDC Workshop**, August 2021

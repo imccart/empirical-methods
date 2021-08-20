@@ -10,7 +10,4 @@ difference-in-differences
 what-is-panel-data
 what-is-difference-in-differences
 presentations
-panel-intro
-dd
-other-stuff
 code-files
