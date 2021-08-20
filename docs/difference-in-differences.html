@@ -114,29 +114,29 @@ where <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inli
 <h3>
 <span class="header-section-number">4.5.1</span> Intro to Panel Data<a class="anchor" aria-label="anchor" href="#intro-to-panel-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="difference-in-differences.html#cb2-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb2-2"><a href="difference-in-differences.html#cb2-2" aria-hidden="true" tabindex="-1"></a>** Panel <span class="kw">data</span> <span class="kw">estimates</span> <span class="kw">in</span> Stata</span>
-<span id="cb2-3"><a href="difference-in-differences.html#cb2-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb2-4"><a href="difference-in-differences.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="difference-in-differences.html#cb2-5" aria-hidden="true" tabindex="-1"></a>** FE (within) estimator</span>
-<span id="cb2-6"><a href="difference-in-differences.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install bcuse</span>
-<span id="cb2-7"><a href="difference-in-differences.html#cb2-7" aria-hidden="true" tabindex="-1"></a>bcuse wagepan</span>
-<span id="cb2-8"><a href="difference-in-differences.html#cb2-8" aria-hidden="true" tabindex="-1"></a>xtset <span class="kw">nr</span> <span class="fu">year</span></span>
-<span id="cb2-9"><a href="difference-in-differences.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> lwage exper expersq, <span class="kw">fe</span></span>
-<span id="cb2-10"><a href="difference-in-differences.html#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="difference-in-differences.html#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="difference-in-differences.html#cb2-12" aria-hidden="true" tabindex="-1"></a>** Manually demeaning the <span class="kw">data</span></span>
-<span id="cb2-13"><a href="difference-in-differences.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> x <span class="kw">of</span> <span class="kw">varlist</span> lwage exper expersq {</span>
-<span id="cb2-14"><a href="difference-in-differences.html#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> mean_<span class="ot">`x'</span>=<span class="kw">mean</span>(<span class="ot">`x'</span>)</span>
-<span id="cb2-15"><a href="difference-in-differences.html#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> demean_<span class="ot">`x'</span>=<span class="ot">`x'</span>-mean_<span class="ot">`x'</span></span>
-<span id="cb2-16"><a href="difference-in-differences.html#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-17"><a href="difference-in-differences.html#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> demean_lwage demean_exper demean_expersq</span>
-<span id="cb2-18"><a href="difference-in-differences.html#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="difference-in-differences.html#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="difference-in-differences.html#cb2-20" aria-hidden="true" tabindex="-1"></a>** First differencing</span>
-<span id="cb2-21"><a href="difference-in-differences.html#cb2-21" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span>: the <span class="st">"d."</span> <span class="kw">operator</span> only works with identical time gaps (1 <span class="kw">in</span> <span class="kw">this</span> <span class="kw">case</span>)</span>
-<span id="cb2-22"><a href="difference-in-differences.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> <span class="kw">d</span>.lwage <span class="kw">d</span>.exper <span class="kw">d</span>.expersq, <span class="kw">noconstant</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="difference-in-differences.html#cb1-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb1-2"><a href="difference-in-differences.html#cb1-2" aria-hidden="true" tabindex="-1"></a>** Panel <span class="kw">data</span> <span class="kw">estimates</span> <span class="kw">in</span> Stata</span>
+<span id="cb1-3"><a href="difference-in-differences.html#cb1-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb1-4"><a href="difference-in-differences.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="difference-in-differences.html#cb1-5" aria-hidden="true" tabindex="-1"></a>** FE (within) estimator</span>
+<span id="cb1-6"><a href="difference-in-differences.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install bcuse</span>
+<span id="cb1-7"><a href="difference-in-differences.html#cb1-7" aria-hidden="true" tabindex="-1"></a>bcuse wagepan</span>
+<span id="cb1-8"><a href="difference-in-differences.html#cb1-8" aria-hidden="true" tabindex="-1"></a>xtset <span class="kw">nr</span> <span class="fu">year</span></span>
+<span id="cb1-9"><a href="difference-in-differences.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> lwage exper expersq, <span class="kw">fe</span></span>
+<span id="cb1-10"><a href="difference-in-differences.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="difference-in-differences.html#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="difference-in-differences.html#cb1-12" aria-hidden="true" tabindex="-1"></a>** Manually demeaning the <span class="kw">data</span></span>
+<span id="cb1-13"><a href="difference-in-differences.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> x <span class="kw">of</span> <span class="kw">varlist</span> lwage exper expersq {</span>
+<span id="cb1-14"><a href="difference-in-differences.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> mean_<span class="ot">`x'</span>=<span class="kw">mean</span>(<span class="ot">`x'</span>)</span>
+<span id="cb1-15"><a href="difference-in-differences.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">egen</span> demean_<span class="ot">`x'</span>=<span class="ot">`x'</span>-mean_<span class="ot">`x'</span></span>
+<span id="cb1-16"><a href="difference-in-differences.html#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="difference-in-differences.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> demean_lwage demean_exper demean_expersq</span>
+<span id="cb1-18"><a href="difference-in-differences.html#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="difference-in-differences.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="difference-in-differences.html#cb1-20" aria-hidden="true" tabindex="-1"></a>** First differencing</span>
+<span id="cb1-21"><a href="difference-in-differences.html#cb1-21" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span>: the <span class="st">"d."</span> <span class="kw">operator</span> only works with identical time gaps (1 <span class="kw">in</span> <span class="kw">this</span> <span class="kw">case</span>)</span>
+<span id="cb1-22"><a href="difference-in-differences.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> <span class="kw">d</span>.lwage <span class="kw">d</span>.exper <span class="kw">d</span>.expersq, <span class="kw">noconstant</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">########################################</span>
 <span class="co">## Panel data estimates in R</span>
 <span class="co">########################################</span>
@@ -171,32 +171,32 @@ where <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inli
 <h3>
 <span class="header-section-number">4.5.2</span> Basics of DD<a class="anchor" aria-label="anchor" href="#basics-of-dd"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="difference-in-differences.html#cb4-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb4-2"><a href="difference-in-differences.html#cb4-2" aria-hidden="true" tabindex="-1"></a>** Differences-<span class="kw">in</span>-Differences <span class="kw">in</span> Stata</span>
-<span id="cb4-3"><a href="difference-in-differences.html#cb4-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb4-4"><a href="difference-in-differences.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb4-5"><a href="difference-in-differences.html#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="difference-in-differences.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="difference-in-differences.html#cb4-7" aria-hidden="true" tabindex="-1"></a>** Looking <span class="fu">at</span> the <span class="kw">data</span></span>
-<span id="cb4-8"><a href="difference-in-differences.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb4-9"><a href="difference-in-differences.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
-<span id="cb4-10"><a href="difference-in-differences.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb4-11"><a href="difference-in-differences.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">collapse</span> (<span class="kw">mean</span>) perc_unins, <span class="kw">by</span>(<span class="fu">year</span> expand_ever)</span>
-<span id="cb4-12"><a href="difference-in-differences.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"FALSE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(solid)) <span class="co">///</span></span>
-<span id="cb4-13"><a href="difference-in-differences.html#cb4-13" aria-hidden="true" tabindex="-1"></a>  (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"TRUE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(<span class="kw">dash</span>)), <span class="co">///</span></span>
-<span id="cb4-14"><a href="difference-in-differences.html#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="bn">xline</span>(2013.5) <span class="co">///</span></span>
-<span id="cb4-15"><a href="difference-in-differences.html#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Fraction Uninsured"</span>) <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(0.15 2017 <span class="st">"Non-expansion"</span>, place(<span class="fu">e</span>)) <span class="bn">text</span>(0.08 2017 <span class="st">"Expansion"</span>, place(<span class="fu">e</span>))</span>
-<span id="cb4-16"><a href="difference-in-differences.html#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="difference-in-differences.html#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="difference-in-differences.html#cb4-18" aria-hidden="true" tabindex="-1"></a>** Simple 2x2 DD</span>
-<span id="cb4-19"><a href="difference-in-differences.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
-<span id="cb4-20"><a href="difference-in-differences.html#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
-<span id="cb4-21"><a href="difference-in-differences.html#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
-<span id="cb4-22"><a href="difference-in-differences.html#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="difference-in-differences.html#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> perc_unins treat <span class="kw">post</span> treat_post</span>
-<span id="cb4-24"><a href="difference-in-differences.html#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="difference-in-differences.html#cb4-25" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span> - Stata 17 has didregress that will <span class="kw">do</span> a lot <span class="kw">of</span> <span class="kw">this</span> automatically</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="difference-in-differences.html#cb3-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb3-2"><a href="difference-in-differences.html#cb3-2" aria-hidden="true" tabindex="-1"></a>** Differences-<span class="kw">in</span>-Differences <span class="kw">in</span> Stata</span>
+<span id="cb3-3"><a href="difference-in-differences.html#cb3-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb3-4"><a href="difference-in-differences.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb3-5"><a href="difference-in-differences.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="difference-in-differences.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="difference-in-differences.html#cb3-7" aria-hidden="true" tabindex="-1"></a>** Looking <span class="fu">at</span> the <span class="kw">data</span></span>
+<span id="cb3-8"><a href="difference-in-differences.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb3-9"><a href="difference-in-differences.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
+<span id="cb3-10"><a href="difference-in-differences.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb3-11"><a href="difference-in-differences.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">collapse</span> (<span class="kw">mean</span>) perc_unins, <span class="kw">by</span>(<span class="fu">year</span> expand_ever)</span>
+<span id="cb3-12"><a href="difference-in-differences.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"FALSE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(solid)) <span class="co">///</span></span>
+<span id="cb3-13"><a href="difference-in-differences.html#cb3-13" aria-hidden="true" tabindex="-1"></a>  (connected perc_unins <span class="fu">year</span> <span class="kw">if</span> expand_ever==<span class="st">"TRUE"</span>, <span class="kw">color</span>(<span class="bn">black</span>) lpattern(<span class="kw">dash</span>)), <span class="co">///</span></span>
+<span id="cb3-14"><a href="difference-in-differences.html#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="bn">xline</span>(2013.5) <span class="co">///</span></span>
+<span id="cb3-15"><a href="difference-in-differences.html#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Fraction Uninsured"</span>) <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(0.15 2017 <span class="st">"Non-expansion"</span>, place(<span class="fu">e</span>)) <span class="bn">text</span>(0.08 2017 <span class="st">"Expansion"</span>, place(<span class="fu">e</span>))</span>
+<span id="cb3-16"><a href="difference-in-differences.html#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="difference-in-differences.html#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="difference-in-differences.html#cb3-18" aria-hidden="true" tabindex="-1"></a>** Simple 2x2 DD</span>
+<span id="cb3-19"><a href="difference-in-differences.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
+<span id="cb3-20"><a href="difference-in-differences.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
+<span id="cb3-21"><a href="difference-in-differences.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
+<span id="cb3-22"><a href="difference-in-differences.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="difference-in-differences.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> perc_unins treat <span class="kw">post</span> treat_post</span>
+<span id="cb3-24"><a href="difference-in-differences.html#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="difference-in-differences.html#cb3-25" aria-hidden="true" tabindex="-1"></a>** <span class="kw">note</span> - Stata 17 has didregress that will <span class="kw">do</span> a lot <span class="kw">of</span> <span class="kw">this</span> automatically</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">########################################</span>
 <span class="co">## Difference-in-Differences in R</span>
 <span class="co">########################################</span>
@@ -236,93 +236,93 @@ where <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inli
 <h3>
 <span class="header-section-number">4.5.3</span> TWFE and Event Studies<a class="anchor" aria-label="anchor" href="#twfe-and-event-studies-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="difference-in-differences.html#cb6-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb6-2"><a href="difference-in-differences.html#cb6-2" aria-hidden="true" tabindex="-1"></a>** Event Studies <span class="kw">in</span> Stata</span>
-<span id="cb6-3"><a href="difference-in-differences.html#cb6-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb6-4"><a href="difference-in-differences.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install reghdfe</span>
-<span id="cb6-5"><a href="difference-in-differences.html#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="difference-in-differences.html#cb6-6" aria-hidden="true" tabindex="-1"></a>** Common treatment timing</span>
-<span id="cb6-7"><a href="difference-in-differences.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb6-8"><a href="difference-in-differences.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb6-9"><a href="difference-in-differences.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
-<span id="cb6-10"><a href="difference-in-differences.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb6-11"><a href="difference-in-differences.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
-<span id="cb6-12"><a href="difference-in-differences.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
-<span id="cb6-13"><a href="difference-in-differences.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
-<span id="cb6-14"><a href="difference-in-differences.html#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="difference-in-differences.html#cb6-15" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins treat##ib2013.<span class="fu">year</span>, absorb(state)</span>
-<span id="cb6-16"><a href="difference-in-differences.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
-<span id="cb6-17"><a href="difference-in-differences.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
-<span id="cb6-18"><a href="difference-in-differences.html#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2012(1)2018 {</span>
-<span id="cb6-19"><a href="difference-in-differences.html#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
-<span id="cb6-20"><a href="difference-in-differences.html#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
-<span id="cb6-21"><a href="difference-in-differences.html#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-22"><a href="difference-in-differences.html#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="difference-in-differences.html#cb6-23" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
-<span id="cb6-24"><a href="difference-in-differences.html#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
-<span id="cb6-25"><a href="difference-in-differences.html#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
-<span id="cb6-26"><a href="difference-in-differences.html#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="difference-in-differences.html#cb6-27" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
-<span id="cb6-28"><a href="difference-in-differences.html#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">year</span> coef se ci_*</span>
-<span id="cb6-29"><a href="difference-in-differences.html#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
-<span id="cb6-30"><a href="difference-in-differences.html#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="difference-in-differences.html#cb6-31" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
-<span id="cb6-32"><a href="difference-in-differences.html#cb6-32" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
-<span id="cb6-33"><a href="difference-in-differences.html#cb6-33" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
-<span id="cb6-34"><a href="difference-in-differences.html#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef <span class="fu">year</span>, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom <span class="fu">year</span>) <span class="co">///</span></span>
-<span id="cb6-35"><a href="difference-in-differences.html#cb6-35" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(2012 2018)), <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="co">///</span></span>
-<span id="cb6-36"><a href="difference-in-differences.html#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>)</span>
-<span id="cb6-37"><a href="difference-in-differences.html#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-38"><a href="difference-in-differences.html#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-39"><a href="difference-in-differences.html#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-40"><a href="difference-in-differences.html#cb6-40" aria-hidden="true" tabindex="-1"></a>** Differential treatment timing</span>
-<span id="cb6-41"><a href="difference-in-differences.html#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb6-42"><a href="difference-in-differences.html#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb6-43"><a href="difference-in-differences.html#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb6-44"><a href="difference-in-differences.html#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
-<span id="cb6-45"><a href="difference-in-differences.html#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
-<span id="cb6-46"><a href="difference-in-differences.html#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
-<span id="cb6-47"><a href="difference-in-differences.html#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> event_time=-1 <span class="kw">if</span> event_time==.</span>
-<span id="cb6-48"><a href="difference-in-differences.html#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="difference-in-differences.html#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
-<span id="cb6-50"><a href="difference-in-differences.html#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
-<span id="cb6-51"><a href="difference-in-differences.html#cb6-51" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-52"><a href="difference-in-differences.html#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
-<span id="cb6-53"><a href="difference-in-differences.html#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
-<span id="cb6-54"><a href="difference-in-differences.html#cb6-54" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-55"><a href="difference-in-differences.html#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
-<span id="cb6-56"><a href="difference-in-differences.html#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-57"><a href="difference-in-differences.html#cb6-57" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins F3event F2event L0event L1event L2event L3event L4event, absorb(state <span class="fu">year</span>) <span class="kw">cluster</span>(state)</span>
-<span id="cb6-58"><a href="difference-in-differences.html#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
-<span id="cb6-59"><a href="difference-in-differences.html#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
-<span id="cb6-60"><a href="difference-in-differences.html#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2(1)3 {</span>
-<span id="cb6-61"><a href="difference-in-differences.html#cb6-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
-<span id="cb6-62"><a href="difference-in-differences.html#cb6-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
-<span id="cb6-63"><a href="difference-in-differences.html#cb6-63" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-64"><a href="difference-in-differences.html#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 0(1)4 {</span>
-<span id="cb6-65"><a href="difference-in-differences.html#cb6-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
-<span id="cb6-66"><a href="difference-in-differences.html#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
-<span id="cb6-67"><a href="difference-in-differences.html#cb6-67" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-68"><a href="difference-in-differences.html#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> coef = 0 <span class="kw">if</span> F1event==1</span>
-<span id="cb6-69"><a href="difference-in-differences.html#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> se=0 <span class="kw">if</span> F1event==1</span>
-<span id="cb6-70"><a href="difference-in-differences.html#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-71"><a href="difference-in-differences.html#cb6-71" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
-<span id="cb6-72"><a href="difference-in-differences.html#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
-<span id="cb6-73"><a href="difference-in-differences.html#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
-<span id="cb6-74"><a href="difference-in-differences.html#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-75"><a href="difference-in-differences.html#cb6-75" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
-<span id="cb6-76"><a href="difference-in-differences.html#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> event_time&gt;=-3 &amp; event_time&lt;=4</span>
-<span id="cb6-77"><a href="difference-in-differences.html#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> event_time coef se ci_*</span>
-<span id="cb6-78"><a href="difference-in-differences.html#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
-<span id="cb6-79"><a href="difference-in-differences.html#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-80"><a href="difference-in-differences.html#cb6-80" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
-<span id="cb6-81"><a href="difference-in-differences.html#cb6-81" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
-<span id="cb6-82"><a href="difference-in-differences.html#cb6-82" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
-<span id="cb6-83"><a href="difference-in-differences.html#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="kw">sort</span> event_time</span>
-<span id="cb6-84"><a href="difference-in-differences.html#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef event_time, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom event_time) <span class="co">///</span></span>
-<span id="cb6-85"><a href="difference-in-differences.html#cb6-85" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(-3 4)), <span class="bn">xtitle</span>(<span class="st">"Time"</span>) <span class="co">///</span></span>
-<span id="cb6-86"><a href="difference-in-differences.html#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>) <span class="kw">xlabel</span>(-3(1)4)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="difference-in-differences.html#cb5-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb5-2"><a href="difference-in-differences.html#cb5-2" aria-hidden="true" tabindex="-1"></a>** Event Studies <span class="kw">in</span> Stata</span>
+<span id="cb5-3"><a href="difference-in-differences.html#cb5-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb5-4"><a href="difference-in-differences.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install reghdfe</span>
+<span id="cb5-5"><a href="difference-in-differences.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="difference-in-differences.html#cb5-6" aria-hidden="true" tabindex="-1"></a>** Common treatment timing</span>
+<span id="cb5-7"><a href="difference-in-differences.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb5-8"><a href="difference-in-differences.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb5-9"><a href="difference-in-differences.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> expand_year==<span class="st">"2014"</span> | expand_year==<span class="st">"NA"</span></span>
+<span id="cb5-10"><a href="difference-in-differences.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb5-11"><a href="difference-in-differences.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="kw">post</span>=(<span class="fu">year</span>&gt;=2014)</span>
+<span id="cb5-12"><a href="difference-in-differences.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(expand_ever==<span class="st">"TRUE"</span>)</span>
+<span id="cb5-13"><a href="difference-in-differences.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat_post=(expand==<span class="st">"TRUE"</span>)</span>
+<span id="cb5-14"><a href="difference-in-differences.html#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="difference-in-differences.html#cb5-15" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins treat##ib2013.<span class="fu">year</span>, absorb(state)</span>
+<span id="cb5-16"><a href="difference-in-differences.html#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
+<span id="cb5-17"><a href="difference-in-differences.html#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
+<span id="cb5-18"><a href="difference-in-differences.html#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2012(1)2018 {</span>
+<span id="cb5-19"><a href="difference-in-differences.html#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
+<span id="cb5-20"><a href="difference-in-differences.html#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[1.treat#<span class="ot">`i'</span>.<span class="fu">year</span>] <span class="kw">if</span> <span class="fu">year</span> == <span class="ot">`i'</span></span>
+<span id="cb5-21"><a href="difference-in-differences.html#cb5-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-22"><a href="difference-in-differences.html#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="difference-in-differences.html#cb5-23" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
+<span id="cb5-24"><a href="difference-in-differences.html#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
+<span id="cb5-25"><a href="difference-in-differences.html#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
+<span id="cb5-26"><a href="difference-in-differences.html#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="difference-in-differences.html#cb5-27" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
+<span id="cb5-28"><a href="difference-in-differences.html#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">year</span> coef se ci_*</span>
+<span id="cb5-29"><a href="difference-in-differences.html#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
+<span id="cb5-30"><a href="difference-in-differences.html#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="difference-in-differences.html#cb5-31" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
+<span id="cb5-32"><a href="difference-in-differences.html#cb5-32" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
+<span id="cb5-33"><a href="difference-in-differences.html#cb5-33" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
+<span id="cb5-34"><a href="difference-in-differences.html#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef <span class="fu">year</span>, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom <span class="fu">year</span>) <span class="co">///</span></span>
+<span id="cb5-35"><a href="difference-in-differences.html#cb5-35" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(2012 2018)), <span class="bn">xtitle</span>(<span class="st">"Year"</span>) <span class="co">///</span></span>
+<span id="cb5-36"><a href="difference-in-differences.html#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>)</span>
+<span id="cb5-37"><a href="difference-in-differences.html#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="difference-in-differences.html#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="difference-in-differences.html#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="difference-in-differences.html#cb5-40" aria-hidden="true" tabindex="-1"></a>** Differential treatment timing</span>
+<span id="cb5-41"><a href="difference-in-differences.html#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb5-42"><a href="difference-in-differences.html#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb5-43"><a href="difference-in-differences.html#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb5-44"><a href="difference-in-differences.html#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb5-45"><a href="difference-in-differences.html#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb5-46"><a href="difference-in-differences.html#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb5-47"><a href="difference-in-differences.html#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> event_time=-1 <span class="kw">if</span> event_time==.</span>
+<span id="cb5-48"><a href="difference-in-differences.html#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="difference-in-differences.html#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
+<span id="cb5-50"><a href="difference-in-differences.html#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
+<span id="cb5-51"><a href="difference-in-differences.html#cb5-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-52"><a href="difference-in-differences.html#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
+<span id="cb5-53"><a href="difference-in-differences.html#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
+<span id="cb5-54"><a href="difference-in-differences.html#cb5-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-55"><a href="difference-in-differences.html#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
+<span id="cb5-56"><a href="difference-in-differences.html#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="difference-in-differences.html#cb5-57" aria-hidden="true" tabindex="-1"></a>reghdfe perc_unins F3event F2event L0event L1event L2event L3event L4event, absorb(state <span class="fu">year</span>) <span class="kw">cluster</span>(state)</span>
+<span id="cb5-58"><a href="difference-in-differences.html#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> coef = .</span>
+<span id="cb5-59"><a href="difference-in-differences.html#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> se = .</span>
+<span id="cb5-60"><a href="difference-in-differences.html#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 2(1)3 {</span>
+<span id="cb5-61"><a href="difference-in-differences.html#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
+<span id="cb5-62"><a href="difference-in-differences.html#cb5-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[F<span class="ot">`i'</span>event] <span class="kw">if</span> F<span class="ot">`i'</span>event==1</span>
+<span id="cb5-63"><a href="difference-in-differences.html#cb5-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-64"><a href="difference-in-differences.html#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 0(1)4 {</span>
+<span id="cb5-65"><a href="difference-in-differences.html#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> coef = _b[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
+<span id="cb5-66"><a href="difference-in-differences.html#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span> se = _se[L<span class="ot">`i'</span>event] <span class="kw">if</span> L<span class="ot">`i'</span>event==1</span>
+<span id="cb5-67"><a href="difference-in-differences.html#cb5-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-68"><a href="difference-in-differences.html#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> coef = 0 <span class="kw">if</span> F1event==1</span>
+<span id="cb5-69"><a href="difference-in-differences.html#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> se=0 <span class="kw">if</span> F1event==1</span>
+<span id="cb5-70"><a href="difference-in-differences.html#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="difference-in-differences.html#cb5-71" aria-hidden="true" tabindex="-1"></a>* Make confidence intervals</span>
+<span id="cb5-72"><a href="difference-in-differences.html#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_top = coef+1.96*se</span>
+<span id="cb5-73"><a href="difference-in-differences.html#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ci_bottom = coef - 1.96*se</span>
+<span id="cb5-74"><a href="difference-in-differences.html#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="difference-in-differences.html#cb5-75" aria-hidden="true" tabindex="-1"></a>* Limit ourselves to one observation per <span class="fu">year</span></span>
+<span id="cb5-76"><a href="difference-in-differences.html#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> event_time&gt;=-3 &amp; event_time&lt;=4</span>
+<span id="cb5-77"><a href="difference-in-differences.html#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> event_time coef se ci_*</span>
+<span id="cb5-78"><a href="difference-in-differences.html#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="kw">duplicates</span> <span class="kw">drop</span></span>
+<span id="cb5-79"><a href="difference-in-differences.html#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="difference-in-differences.html#cb5-80" aria-hidden="true" tabindex="-1"></a>* Create connected scatterplot <span class="kw">of</span> coefficients</span>
+<span id="cb5-81"><a href="difference-in-differences.html#cb5-81" aria-hidden="true" tabindex="-1"></a>* with CIs included with rcap </span>
+<span id="cb5-82"><a href="difference-in-differences.html#cb5-82" aria-hidden="true" tabindex="-1"></a>* and a <span class="kw">line</span> <span class="fu">at</span> 0 from <span class="kw">function</span></span>
+<span id="cb5-83"><a href="difference-in-differences.html#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="kw">sort</span> event_time</span>
+<span id="cb5-84"><a href="difference-in-differences.html#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (<span class="kw">sc</span> coef event_time, <span class="kw">connect</span>(<span class="kw">line</span>)) (rcap ci_top ci_bottom event_time) <span class="co">///</span></span>
+<span id="cb5-85"><a href="difference-in-differences.html#cb5-85" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">function</span> <span class="fu">y</span> = 0, <span class="kw">range</span>(-3 4)), <span class="bn">xtitle</span>(<span class="st">"Time"</span>) <span class="co">///</span></span>
+<span id="cb5-86"><a href="difference-in-differences.html#cb5-86" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">"Estimates and 95% CI from Event Study"</span>) <span class="kw">xlabel</span>(-3(1)4)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">########################################</span>
 <span class="co">## Event Studies in R</span>
 <span class="co">########################################</span>
@@ -367,89 +367,89 @@ where <span class="math inline">\(\gamma_{i}\)</span> and <span class="math inli
 <h3>
 <span class="header-section-number">4.5.4</span> Recent DD Advancements<a class="anchor" aria-label="anchor" href="#recent-dd-advancements"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="difference-in-differences.html#cb8-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb8-2"><a href="difference-in-differences.html#cb8-2" aria-hidden="true" tabindex="-1"></a>** Recent DD Estimators <span class="kw">in</span> Stata</span>
-<span id="cb8-3"><a href="difference-in-differences.html#cb8-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
-<span id="cb8-4"><a href="difference-in-differences.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install event_plot</span>
-<span id="cb8-5"><a href="difference-in-differences.html#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="difference-in-differences.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="difference-in-differences.html#cb8-7" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
-<span id="cb8-8"><a href="difference-in-differences.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
-<span id="cb8-9"><a href="difference-in-differences.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
-<span id="cb8-10"><a href="difference-in-differences.html#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="difference-in-differences.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb8-12"><a href="difference-in-differences.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb8-13"><a href="difference-in-differences.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
-<span id="cb8-14"><a href="difference-in-differences.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb8-15"><a href="difference-in-differences.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
-<span id="cb8-16"><a href="difference-in-differences.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
-<span id="cb8-17"><a href="difference-in-differences.html#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="difference-in-differences.html#cb8-18" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
-<span id="cb8-19"><a href="difference-in-differences.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
-<span id="cb8-20"><a href="difference-in-differences.html#cb8-20" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
-<span id="cb8-21"><a href="difference-in-differences.html#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="difference-in-differences.html#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="difference-in-differences.html#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="difference-in-differences.html#cb8-24" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
-<span id="cb8-25"><a href="difference-in-differences.html#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
-<span id="cb8-26"><a href="difference-in-differences.html#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
-<span id="cb8-27"><a href="difference-in-differences.html#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="difference-in-differences.html#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb8-29"><a href="difference-in-differences.html#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb8-30"><a href="difference-in-differences.html#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
-<span id="cb8-31"><a href="difference-in-differences.html#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb8-32"><a href="difference-in-differences.html#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
-<span id="cb8-33"><a href="difference-in-differences.html#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
-<span id="cb8-34"><a href="difference-in-differences.html#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="difference-in-differences.html#cb8-35" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
-<span id="cb8-36"><a href="difference-in-differences.html#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
-<span id="cb8-37"><a href="difference-in-differences.html#cb8-37" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
-<span id="cb8-38"><a href="difference-in-differences.html#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="difference-in-differences.html#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="difference-in-differences.html#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="difference-in-differences.html#cb8-41" aria-hidden="true" tabindex="-1"></a>** Sun and Abraham</span>
-<span id="cb8-42"><a href="difference-in-differences.html#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install eventstudyinteract</span>
-<span id="cb8-43"><a href="difference-in-differences.html#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install avar</span>
-<span id="cb8-44"><a href="difference-in-differences.html#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="difference-in-differences.html#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb8-46"><a href="difference-in-differences.html#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb8-47"><a href="difference-in-differences.html#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb8-48"><a href="difference-in-differences.html#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
-<span id="cb8-49"><a href="difference-in-differences.html#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
-<span id="cb8-50"><a href="difference-in-differences.html#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
-<span id="cb8-51"><a href="difference-in-differences.html#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
-<span id="cb8-52"><a href="difference-in-differences.html#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
-<span id="cb8-53"><a href="difference-in-differences.html#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="difference-in-differences.html#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
-<span id="cb8-55"><a href="difference-in-differences.html#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
-<span id="cb8-56"><a href="difference-in-differences.html#cb8-56" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-57"><a href="difference-in-differences.html#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
-<span id="cb8-58"><a href="difference-in-differences.html#cb8-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
-<span id="cb8-59"><a href="difference-in-differences.html#cb8-59" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-60"><a href="difference-in-differences.html#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
-<span id="cb8-61"><a href="difference-in-differences.html#cb8-61" aria-hidden="true" tabindex="-1"></a>eventstudyinteract perc_unins F3event F2event L0event L1event L2event L3event L4event, <span class="kw">vce</span>(<span class="kw">cluster</span> stategroup) absorb(stategroup <span class="fu">year</span>) cohort(expand_year) control_cohort(nevertreated)</span>
-<span id="cb8-62"><a href="difference-in-differences.html#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-63"><a href="difference-in-differences.html#cb8-63" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(b_iw)#e(V_iw), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-3(1)4) <span class="bn">title</span>(<span class="st">"Sun and Abraham (2020)"</span>)) stub_lag(L#event) stub_lead(F#event) plottype(<span class="kw">scatter</span>) ciplottype(rcap) together</span>
-<span id="cb8-64"><a href="difference-in-differences.html#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-65"><a href="difference-in-differences.html#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-66"><a href="difference-in-differences.html#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-67"><a href="difference-in-differences.html#cb8-67" aria-hidden="true" tabindex="-1"></a>** <span class="kw">de</span> Chaisemartin and D'Haultfoeuille</span>
-<span id="cb8-68"><a href="difference-in-differences.html#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install did_multiplegt</span>
-<span id="cb8-69"><a href="difference-in-differences.html#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-70"><a href="difference-in-differences.html#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
-<span id="cb8-71"><a href="difference-in-differences.html#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
-<span id="cb8-72"><a href="difference-in-differences.html#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
-<span id="cb8-73"><a href="difference-in-differences.html#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
-<span id="cb8-74"><a href="difference-in-differences.html#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
-<span id="cb8-75"><a href="difference-in-differences.html#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
-<span id="cb8-76"><a href="difference-in-differences.html#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
-<span id="cb8-77"><a href="difference-in-differences.html#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
-<span id="cb8-78"><a href="difference-in-differences.html#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(event_time&gt;=0 &amp; event_time!=.)</span>
-<span id="cb8-79"><a href="difference-in-differences.html#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-80"><a href="difference-in-differences.html#cb8-80" aria-hidden="true" tabindex="-1"></a>did_multiplegt perc_unins stategroup <span class="fu">year</span> treat, robust_dynamic dynamic(4) placebo(3) breps(100) <span class="kw">cluster</span>(stategroup) </span>
-<span id="cb8-81"><a href="difference-in-differences.html#cb8-81" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(<span class="kw">estimates</span>)#e(variances), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="co">///</span></span>
-<span id="cb8-82"><a href="difference-in-differences.html#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="bn">title</span>(<span class="st">"de Chaisemartin and D'Haultfoeuille (2020)"</span>) <span class="kw">xlabel</span>(-3(1)4)) stub_lag(Effect_#) stub_lead(Placebo_#) together</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="difference-in-differences.html#cb7-1" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb7-2"><a href="difference-in-differences.html#cb7-2" aria-hidden="true" tabindex="-1"></a>** Recent DD Estimators <span class="kw">in</span> Stata</span>
+<span id="cb7-3"><a href="difference-in-differences.html#cb7-3" aria-hidden="true" tabindex="-1"></a>****************************************</span>
+<span id="cb7-4"><a href="difference-in-differences.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install event_plot</span>
+<span id="cb7-5"><a href="difference-in-differences.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="difference-in-differences.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="difference-in-differences.html#cb7-7" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
+<span id="cb7-8"><a href="difference-in-differences.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
+<span id="cb7-9"><a href="difference-in-differences.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
+<span id="cb7-10"><a href="difference-in-differences.html#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="difference-in-differences.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-12"><a href="difference-in-differences.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-13"><a href="difference-in-differences.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-14"><a href="difference-in-differences.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-15"><a href="difference-in-differences.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-16"><a href="difference-in-differences.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-17"><a href="difference-in-differences.html#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="difference-in-differences.html#cb7-18" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
+<span id="cb7-19"><a href="difference-in-differences.html#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
+<span id="cb7-20"><a href="difference-in-differences.html#cb7-20" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
+<span id="cb7-21"><a href="difference-in-differences.html#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="difference-in-differences.html#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="difference-in-differences.html#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="difference-in-differences.html#cb7-24" aria-hidden="true" tabindex="-1"></a>** Callaway and Sant'Anna</span>
+<span id="cb7-25"><a href="difference-in-differences.html#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install csdid</span>
+<span id="cb7-26"><a href="difference-in-differences.html#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install drdid</span>
+<span id="cb7-27"><a href="difference-in-differences.html#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="difference-in-differences.html#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-29"><a href="difference-in-differences.html#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-30"><a href="difference-in-differences.html#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-31"><a href="difference-in-differences.html#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-32"><a href="difference-in-differences.html#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"0"</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-33"><a href="difference-in-differences.html#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-34"><a href="difference-in-differences.html#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="difference-in-differences.html#cb7-35" aria-hidden="true" tabindex="-1"></a>csdid perc_unins, ivar(stategroup) time(<span class="fu">year</span>) gvar(expand_year) notyet</span>
+<span id="cb7-36"><a href="difference-in-differences.html#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> event, estore(<span class="kw">cs</span>)</span>
+<span id="cb7-37"><a href="difference-in-differences.html#cb7-37" aria-hidden="true" tabindex="-1"></a>event_plot <span class="kw">cs</span>, default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-6(1)4) <span class="bn">title</span>(<span class="st">"Callaway and Sant'Anna (2020)"</span>)) stub_lag(T+#) stub_lead(T-#) together</span>
+<span id="cb7-38"><a href="difference-in-differences.html#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="difference-in-differences.html#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="difference-in-differences.html#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="difference-in-differences.html#cb7-41" aria-hidden="true" tabindex="-1"></a>** Sun and Abraham</span>
+<span id="cb7-42"><a href="difference-in-differences.html#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install eventstudyinteract</span>
+<span id="cb7-43"><a href="difference-in-differences.html#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install avar</span>
+<span id="cb7-44"><a href="difference-in-differences.html#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="difference-in-differences.html#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-46"><a href="difference-in-differences.html#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-47"><a href="difference-in-differences.html#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-48"><a href="difference-in-differences.html#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-49"><a href="difference-in-differences.html#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-50"><a href="difference-in-differences.html#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-51"><a href="difference-in-differences.html#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb7-52"><a href="difference-in-differences.html#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
+<span id="cb7-53"><a href="difference-in-differences.html#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="difference-in-differences.html#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 0/4 {</span>
+<span id="cb7-55"><a href="difference-in-differences.html#cb7-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> L<span class="ot">`l'</span>event = (event_time==<span class="ot">`l'</span>)</span>
+<span id="cb7-56"><a href="difference-in-differences.html#cb7-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-57"><a href="difference-in-differences.html#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="ot">l</span> = 1/2 {</span>
+<span id="cb7-58"><a href="difference-in-differences.html#cb7-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> F<span class="ot">`l'</span>event = (event_time==-<span class="ot">`l'</span>)</span>
+<span id="cb7-59"><a href="difference-in-differences.html#cb7-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-60"><a href="difference-in-differences.html#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F3event=(event_time&lt;=-3)</span>
+<span id="cb7-61"><a href="difference-in-differences.html#cb7-61" aria-hidden="true" tabindex="-1"></a>eventstudyinteract perc_unins F3event F2event L0event L1event L2event L3event L4event, <span class="kw">vce</span>(<span class="kw">cluster</span> stategroup) absorb(stategroup <span class="fu">year</span>) cohort(expand_year) control_cohort(nevertreated)</span>
+<span id="cb7-62"><a href="difference-in-differences.html#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="difference-in-differences.html#cb7-63" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(b_iw)#e(V_iw), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="kw">xlabel</span>(-3(1)4) <span class="bn">title</span>(<span class="st">"Sun and Abraham (2020)"</span>)) stub_lag(L#event) stub_lead(F#event) plottype(<span class="kw">scatter</span>) ciplottype(rcap) together</span>
+<span id="cb7-64"><a href="difference-in-differences.html#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="difference-in-differences.html#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="difference-in-differences.html#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="difference-in-differences.html#cb7-67" aria-hidden="true" tabindex="-1"></a>** <span class="kw">de</span> Chaisemartin and D'Haultfoeuille</span>
+<span id="cb7-68"><a href="difference-in-differences.html#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install did_multiplegt</span>
+<span id="cb7-69"><a href="difference-in-differences.html#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-70"><a href="difference-in-differences.html#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="kw">insheet</span> <span class="kw">using</span> <span class="st">"https://raw.githubusercontent.com/imccart/empirical-methods/main/data/medicaid-expansion/mcaid-expand-data.txt"</span>, <span class="kw">clear</span></span>
+<span id="cb7-71"><a href="difference-in-differences.html#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> perc_unins=uninsured/adult_pop</span>
+<span id="cb7-72"><a href="difference-in-differences.html#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> expand_ever==<span class="st">"NA"</span></span>
+<span id="cb7-73"><a href="difference-in-differences.html#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> stategroup=<span class="fu">group</span>(state)</span>
+<span id="cb7-74"><a href="difference-in-differences.html#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> expand_year=<span class="st">"."</span> <span class="kw">if</span> expand_year==<span class="st">"NA"</span></span>
+<span id="cb7-75"><a href="difference-in-differences.html#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="kw">destring</span> expand_year, <span class="kw">replace</span></span>
+<span id="cb7-76"><a href="difference-in-differences.html#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> event_time=<span class="fu">year</span>-expand_year</span>
+<span id="cb7-77"><a href="difference-in-differences.html#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nevertreated=(event_time==.)</span>
+<span id="cb7-78"><a href="difference-in-differences.html#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> treat=(event_time&gt;=0 &amp; event_time!=.)</span>
+<span id="cb7-79"><a href="difference-in-differences.html#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="difference-in-differences.html#cb7-80" aria-hidden="true" tabindex="-1"></a>did_multiplegt perc_unins stategroup <span class="fu">year</span> treat, robust_dynamic dynamic(4) placebo(3) breps(100) <span class="kw">cluster</span>(stategroup) </span>
+<span id="cb7-81"><a href="difference-in-differences.html#cb7-81" aria-hidden="true" tabindex="-1"></a>event_plot <span class="fu">e</span>(<span class="kw">estimates</span>)#e(variances), default_look graph_opt(<span class="bn">xtitle</span>(<span class="st">"Periods since the event"</span>) <span class="bn">ytitle</span>(<span class="st">"Average causal effect"</span>) <span class="co">///</span></span>
+<span id="cb7-82"><a href="difference-in-differences.html#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="bn">title</span>(<span class="st">"de Chaisemartin and D'Haultfoeuille (2020)"</span>) <span class="kw">xlabel</span>(-3(1)4)) stub_lag(Effect_#) stub_lead(Placebo_#) together</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">########################################</span>
 <span class="co">## Recent DD Estimators in R</span>
 <span class="co">########################################</span>

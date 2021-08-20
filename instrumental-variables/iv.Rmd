@@ -38,7 +38,7 @@ The point is that empirical work in practice is messy. Ideally, we could set out
 
 One final note. If you're accessing this on an android mobile device, the flowcharts are going to look a little odd (probably huge). This is a known issue in rendering these types of diagrams. See this closed [issue on GitHub](https://github.com/mermaid-js/mermaid/issues/816) and these unanswered [posts on StackOverflow](https://stackoverflow.com/search?q=%5Bmermaid%5D+chrome). If anyone has any suggestions for how to have this render on an android mobile browser, please let me know. Otherwise, happy instrumenting!
 
-```{r}
+```{r echo=FALSE}
 library(DiagrammeR)
 mermaid("
 graph TD
