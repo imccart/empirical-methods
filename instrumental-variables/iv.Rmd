@@ -1,5 +1,14 @@
 # Instrumental Variables
 
+Want to solve your endogeneity problem with with IV? Well, IV comes with its own problems too. For one, it's biased (although that can be fixed with some assumptions). It's also a very sensitive approach. IV used to be the darling of empirical work, but not so much anymore. 
+
+I'm assuming you have some instrument(s) in mind already, at least as many as you have endogenous variables. 
+
+<center>
+<iframe src="https://giphy.com/embed/fXtGlVSI2ZB2E1JO0b" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+</center>
+
+
 ## Does IV do anything?
 It would be great if we could test for whether we need IV or not. While we can't really do that, we can at least see how different our IV results might be relative to OLS (assuming we have some decent instruments already).
 
@@ -27,9 +36,9 @@ The point is that empirical work in practice is messy. Ideally, we could set out
 
 One final note. If you're accessing this on an android mobile device, the flowcharts are going to look a little odd (probably huge). This is a known issue in rendering these types of diagrams. See this closed [issue on GitHub](https://github.com/mermaid-js/mermaid/issues/816) and these unanswered [posts on StackOverflow](https://stackoverflow.com/search?q=%5Bmermaid%5D+chrome). If anyone has any suggestions for how to have this render on an android mobile browser, please let me know. Otherwise, happy instrumenting!
 
-
-{{< diagram >}}
-graph TD;
+```{r echo=FALSE}
+mermaid('
+graph TD
     linkStyle default interpolate basis
     A(["Thinking of IV?"]) --> B(["Does it really matter?"])
     B --> |"yes!"| C1(["Are your instruments<br> any good?"])
@@ -72,8 +81,8 @@ graph TD;
     click f2 "/iv/step1b_exog_excl" "Invalid IVs"
     click C2 "/" "Try something else"
     click I "https://davidcard.berkeley.edu/papers/card-dellavigna-pagelimits.pdf" "Page limits are non-binding."
-{{< /diagram >}}
-
+')
+```
 
 
 ## References
