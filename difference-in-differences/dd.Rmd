@@ -33,12 +33,11 @@ where $\gamma_{i}$ and $\gamma_{t}$ denote a set of unit $i$ and time period $t$
 
 ## Presentations
 Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
-
-- [Intro to Panel Data](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/intro-cdc202108.html), **CDC Workshop**, August 2021
-- [Basics of DD](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/did-cdc202108.html), **CDC Workshop**, August 2021
-- [TWFE and Event Studies](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/twfe-cdc202108.html), **CDC Workshop**, August 2021
-- [Recent DD Advancements](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newdd-cdc202108.html), **CDC Workshop**, August 2021
-- [Recent Panel Advancements](https://imccart.github.io/empirical-methods-extras/difference-in-differences/slides/newpanel-cdc202108.html), **CDC Workshop**, August 2021
+- [Intro to Panel Data](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/intro-cdc202108.html), **CDC Workshop**, August 2021
+- [Basics of DD](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/did-cdc202108.html), **CDC Workshop**, August 2021
+- [TWFE and Event Studies](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/twfe-cdc202108.html), **CDC Workshop**, August 2021
+- [Recent DD Advancements](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/newdd-cdc202108.html), **CDC Workshop**, August 2021
+- [Recent Panel Advancements](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/newpanel-cdc202108.html), **CDC Workshop**, August 2021
 
 
 ## Code Files
