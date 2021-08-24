@@ -31,54 +31,6 @@ $y_{it} = \alpha + \beta \times 1(Post) + \lambda \times 1(Treat) + \delta \time
 where $\gamma_{i}$ and $\gamma_{t}$ denote a set of unit $i$ and time period $t$ dummy variables (or fixed effects), and where $\delta$ captures our treatment effect of interest just as before.
 
 
-## Presentations
-Below are some presentations I've made in different settings. These more or less repeat the information above but in a presentation format (more figures, fewer words). 
-- [Intro to Panel Data](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/intro-cdc202108.html), **CDC Workshop**, August 2021
-- [Basics of DD](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/did-cdc202108.html), **CDC Workshop**, August 2021
-- [TWFE and Event Studies](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/twfe-cdc202108.html), **CDC Workshop**, August 2021
-- [Recent DD Advancements](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/newdd-cdc202108.html), **CDC Workshop**, August 2021
-- [Recent Panel Advancements](https://empiricalmethods.extras.ianmccarthyecon.com/difference-in-differences/slides/newpanel-cdc202108.html), **CDC Workshop**, August 2021
-
-
-## Code Files
-What good is a discussion of data and econometrics without some practice?! Here are some very basic code files to implement the estimators described above.
-
-### Intro to Panel Data
-
-```{stata eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/Stata-panel.do')}
-```
-
-```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-panel.R')}
-```
-
-
-### Basics of DD
-
-```{stata eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/Stata-did.do')}
-```
-
-```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-did.R')}
-```
-
-
-
-### TWFE and Event Studies
-
-```{stata eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/Stata-event.do')}
-```
-
-```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-event.R')}
-```
-
-
-
-### Recent DD Advancements
-
-```{stata eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/Stata-newdd.do')}
-```
-
-```{r eval=FALSE, code=xfun::read_utf8('https://raw.githubusercontent.com/imccart/empirical-methods-extras/main/difference-in-differences/code/R-newdd.R')}
-```
 
 
 ## References
